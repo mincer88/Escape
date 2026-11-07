@@ -87,7 +87,7 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--lanter
 @media (max-width: 359px) { .timer { font-size: 1.2rem; } .pulse { font-size: .75rem; } .icon-btn { padding: 0 8px; } }
 
 /* ---------- scene ---------- */
-main.scene { padding-block: 16px 130px; display: grid; gap: 14px; }
+main.scene { padding-block: 16px calc(130px + var(--host-badge-gap, 0px));display: grid; gap: 14px; }
 .place { font-family: var(--f-display); font-size: 2rem; line-height: 1; margin: 0; text-wrap: balance; text-shadow: 0 2px 10px #000; }
 .lede { color: var(--muted); margin: -6px 0 0; text-shadow: 0 1px 6px #000; }
 .card { background: var(--bark); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 12px; min-width: 0; }
@@ -140,7 +140,7 @@ body.uv::after { content: ""; position: fixed; inset: 0; pointer-events: none; z
 @keyframes flicker { from { transform: scale(1, .9) skewX(2deg); opacity: .85; } to { transform: scale(.94, 1.08) skewX(-3deg); opacity: 1; } }
 .glow-pulse { animation: gp 2.4s ease-in-out infinite; }
 @keyframes gp { 50% { opacity: .55; } }
-.fogdrift { animation: drift 14s ease-in-out infinite alternate; }
+.fogdrift { animation: drift 14s ease-in-out infinite alternate; pointer-events: none; }
 .fogdrift.b { animation-duration: 19s; animation-direction: alternate-reverse; }
 @keyframes drift { to { transform: translateX(40px); } }
 .far-eyes { animation: fareyes 11s infinite; opacity: 0; }
@@ -260,7 +260,7 @@ body.uv::after { content: ""; position: fixed; inset: 0; pointer-events: none; z
 .slot.rune.filled { border-color: #a99cf2; }
 
 /* inventory */
-.inv { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--bark-solid); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.inv { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--bark-solid); border-top: 1px solid var(--line); padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--host-badge-gap, 0px)); }
 .inv .wrap { display: flex; gap: 8px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; align-items: center; }
 .inv .wrap::-webkit-scrollbar { display: none; }
 .inv .label { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); flex: none; }
@@ -287,7 +287,8 @@ body.uv::after { content: ""; position: fixed; inset: 0; pointer-events: none; z
 .toast { pointer-events: auto; display: grid; gap: 8px; }
 .toast-ok { justify-self: end; min-height: 40px; padding: 6px 16px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff14; color: inherit; font: inherit; font-size: .88rem; cursor: pointer; }
 .funklog { margin: 0; padding-left: 1.4em; display: grid; gap: 8px; font-family: var(--f-diary); font-size: 1.05rem; line-height: 1.35; }
-.sheet-troll { width: 100%; max-height: 32vh; background: #050907; border: 1px solid var(--line); border-radius: 12px; }
+.item-art { width: 128px; height: 128px; justify-self: center; background: #050907; border: 1px solid var(--line); border-radius: 12px; }
+.sheet-troll {width: 100%; max-height: 32vh; background: #050907; border: 1px solid var(--line); border-radius: 12px; }
 .prost { transform-box: fill-box; transform-origin: 30% 100%; animation: prost .9s ease-in-out infinite alternate; }
 @keyframes prost { to { transform: translateY(-5px) rotate(-10deg); } }
 @keyframes tin { from { transform: translateY(-8px); opacity: 0; } }
@@ -430,6 +431,25 @@ const ITEMS = {
   amulett:   { name: 'Amulett',   desc: 'Ein Amulett mit einem roten Stein. Es ist warm. Unangenehm warm.', icon: 'M12 3v4M8 3l4 4 4-4M12 7a6 6 0 1 0 0 12 6 6 0 1 0 0-12zM12 11v4' },
   hering:    { name: 'Roter Hering', desc: 'Eingelegt, in Dill. Völlig nutzlos. Und rot. Musst du uns glauben.', icon: 'M3 12c3-4 9-5 13-2l4-3v10l-4-3c-4 3-10 2-13-2zM7 11h.01' },
 };
+/** Larger pictures of the items for the inventory sheet, drawn in a 100 x 100 box. */
+const ITEM_ART = {
+  laterne: '<circle cx="50" cy="54" r="42" fill="url(#g-lan)"/><path d="M42 20 a8 8 0 0 1 16 0" stroke="#8a8f8b" stroke-width="3" fill="none"/>' +
+    '<path d="M34 22 H66 L60 30 H40Z" fill="#2a2118" stroke="#c9a24a" stroke-width="2"/><rect x="38" y="30" width="24" height="40" rx="3" fill="#ffd27a" fill-opacity=".3" stroke="#c9a24a" stroke-width="2"/>' +
+    '<path d="M50 63 Q42 54 50 41 Q58 54 50 63Z" fill="#ffd27a"/><path d="M44 30 V70 M56 30 V70" stroke="#c9a24a" stroke-width="1.4"/><path d="M32 70 H68 L64 80 H36Z" fill="#2a2118" stroke="#c9a24a" stroke-width="2"/>',
+  uv: '<path d="M60 42 L96 22 V78 L60 58Z" fill="#b9a6ff" fill-opacity=".22"/><rect x="8" y="42" width="42" height="16" rx="4" fill="#3a3550"/><rect x="24" y="45.5" width="9" height="4" rx="1" fill="#8d84c9"/>' +
+    '<rect x="48" y="36" width="12" height="28" rx="2" fill="#6c63a8"/><ellipse cx="60" cy="50" rx="3" ry="13" fill="#b9a6ff" class="glow-pulse"/>',
+  hering: '<path d="M10 52 Q30 30 62 40 Q74 44 80 50 L94 38 L92 62 L80 54 Q72 64 58 64 Q30 70 10 52Z" fill="#c0392b" stroke="#7a1f16" stroke-width="2"/>' +
+    '<circle cx="24" cy="49" r="3" fill="#1b1a12"/><path d="M40 44 Q46 52 40 60 M50 42 Q56 52 50 62" stroke="#e06a5a" stroke-width="2" fill="none"/>' +
+    '<path d="M28 76 q5 -10 10 0 M34 76 V84 M62 28 q5 -10 10 0 M68 28 V20" stroke="#6b8f4a" stroke-width="2" fill="none"/>',
+  kanister: '<path d="M24 26 H64 L74 36 V90 H24Z" fill="#9b3328" stroke="#5e1d17" stroke-width="2.5"/><path d="M32 44 L66 82 M66 44 L32 82" stroke="#7a2a22" stroke-width="4"/>' +
+    '<rect x="29" y="15" width="14" height="11" fill="#5e1d17"/><path d="M50 26 V16 H66 V26" stroke="#5e1d17" stroke-width="4" fill="none"/>',
+  schablone: '<g transform="rotate(-5 50 50)"><rect x="16" y="12" width="68" height="78" fill="#e8dcb0" stroke="#8a7a55" stroke-width="2"/>' +
+    '<path d="M24 22 H46 M24 34 H46 M31 16 V40 M39 16 V40 M56 18 L76 38 M76 18 L56 38 M24 60 L36 52 L48 60 M58 52 L66 64 L74 52" stroke="#5a4a30" stroke-width="2" fill="none"/>' +
+    '<circle cx="35" cy="28" r="2" fill="#5a4a30"/><circle cx="66" cy="24" r="2" fill="#5a4a30"/><circle cx="66" cy="58" r="2" fill="#5a4a30"/><path d="M24 76 H76" stroke="#8a7a55" stroke-dasharray="4 3"/></g>',
+  amulett: '<path d="M26 6 Q50 50 74 6" stroke="#c9a24a" stroke-width="2" fill="none" stroke-dasharray="3 2"/><circle cx="50" cy="62" r="34" fill="url(#g-gem)"/>' +
+    '<path d="M50 36 V44" stroke="#c9a24a" stroke-width="3"/><circle cx="50" cy="62" r="18" fill="#c9a24a" stroke="#8a6d2a" stroke-width="2"/>' +
+    '<circle cx="50" cy="62" r="12" fill="#ff2a3a" stroke="#8a1520" stroke-width="1.5"/><circle cx="46" cy="58" r="3" fill="#ffb3b3"/>',
+};
 const ALTAR_ITEMS = ['laterne', 'kanister', 'schablone', 'amulett'];
 const RUNES = { mond: 'Mond', rabe: 'Rabe', schaedel: 'Schädel', affe: 'Affe' };
 const RUNE_IDS = Object.keys(RUNES);
@@ -522,7 +542,7 @@ const COLOR_JOKES = {
 
 const ACHIEVEMENTS = {
   skipper:  ['Briefing-Skipper', 'Die Einweisung in unter 12 Sekunden weggeklickt.'],
-  hering:   ['Opfer der eigenen Routine', 'Die UV-Kiste geknackt. Nicht alles, was leuchtet, ist relevant.'],
+  hering:   ['Opfer der eigenen Routine', 'Die UV-Kiste geknackt.'],
   troll:    ['Falsches Spiel, Kumpel', 'Dem Troll einen roten Hering angeboten.'],
   affe:     ['Dreiköpfiger Affe', 'Beim Fechten den ältesten Trick versucht.'],
   puls:     ['Kammerflimmern', 'Puls über 140.'],
@@ -535,20 +555,20 @@ const ACHIEVEMENTS = {
 const HINTS = {
   tor: [
     'Fang mit der Zeile an, in der nichts stimmt. Diese vier Ziffern sind komplett raus.',
-    '7, 0, 3 und 4 sind raus. Aus 3709 bleibt nur die 9, und sie steht richtig: ganz hinten.',
-    'Der Code ist 1289.',
+    '7, 0, 3 und 4 sind raus. Was bleibt dann von 3709 übrig, und wo steht es?',
+    'Aus 7418 bleiben nur 1 und 8. Schau in 7418 und 8207 nach, wo die beiden nicht stehen dürfen.',
   ],
   torDone: 'Hier ist alles erledigt. Die Kiste? Kein Kommentar. Die grüne übrigens.',
   dunkel: ['Dein Inventar ist keine Deko. ' + 'Tipp unten auf die Laterne. Die grüne. … Es gibt nur eine. Dann „Hier benutzen“.'],
   bruecke: [
-    'Wer immer nur Konrad mit der Laterne zurückschickt, braucht 34 Minuten. Und Konrads Knöchel hält das auch nicht aus.',
-    'Marcel und Olla müssen zusammen gehen. Und niemand von den beiden darf die Laterne zurückbringen.',
-    'Konrad + Oliver rüber (3), Konrad zurück (1), Marcel + Olla rüber (12), Oliver zurück (3), Konrad + Oliver rüber (3), Konrad humpelt zurück (2), Konrad + Daniel rüber (6). Macht genau 30.',
+    'Die Langsamen kosten am meisten. Wie oft willst du Marcel und Olla wirklich über die Brücke schicken?',
+    'Marcel und Olla gehen zusammen, und keiner von beiden bringt die Laterne zurück. Dafür muss drüben schon jemand Schnelles warten.',
+    'Zurück laufen nur die Schnellen. Und schnell ist nicht nur Konrad.',
   ],
   ohneLaterne: 'Ohne Licht geht hier keiner rüber. Am Tor hing doch was am Pfosten.',
   ohneKanister: 'Der Generator hat Durst. Und der Troll an der Brücke wollte dir noch was mitgeben.',
   ohneSchablone: 'Die Gravuren sind Geheimschrift. Der Förster wollte dir einen Zettel geben. Hast du ihn genommen?',
-  liegtDa: 'Da liegt noch was für dich. Nimm es mit.',
+  liegtDa: 'Da wartet noch was auf dich. Tipp es im Bild an und nimm es mit.',
   brueckeDone: 'Brücke geschafft. Der Troll hat übrigens Hunger. Auf was Eingelegtes. Rotes. Falls dir sowas über den Weg läuft …',
   foerster: [
     'Hör genau hin. Die passende Antwort nimmt etwas aus seiner Beleidigung auf und dreht es gegen ihn.',
@@ -558,20 +578,20 @@ const HINTS = {
   jugs: [
     'Nichts wegschütten. Es geht nur mit Hin- und Herfüllen zwischen den drei Gefäßen.',
     'Fang so an: Kanister → Eimer, Eimer → Kanne, Kanne → Kanister.',
-    'Kanister→Eimer, Eimer→Kanne, Kanne→Kanister, Eimer→Kanne, Kanister→Eimer, Eimer→Kanne, Kanne→Kanister. Dann sind 4 Liter im Kanister.',
+    'Danach sind 6 Liter im Kanister und 2 im Eimer. Mach im selben Rhythmus weiter: Die Kanne ist dein Messbecher.',
   ],
   forsthausDone: 'Der Generator läuft, der Förster schmollt. Weiter in den Salon.',
   salon: [
     'Die Gravuren sind Freimaurer-Schrift. Die Schablone aus deinem Inventar ist der Schlüssel.',
     'Lies die Sicherheitseinweisung noch einmal (Menü oben rechts). Regel 3 gilt auch für Kisten.',
     'Spiel jede Kiste durch: Wenn der Stein dort liegt, welche Aussagen stimmen dann? Es darf nicht alles wahr und nicht alles falsch sein.',
-    'Der Stein liegt in der blauen Kiste.',
+    'Liegt der Stein in der weißen Kiste, sagen alle drei die Wahrheit. Das verbietet Regel 3. Und wie sieht es bei der schwarzen aus?',
   ],
   salonDone: 'Das Amulett hast du. Hinter dem Forsthaus wartet Raum 46.',
   altar: [
     'Schablone, Laterne und Amulett liegen direkt nebeneinander, in dieser Reihenfolge. Wo bleibt dann der Kanister?',
-    'Der Kanister liegt ganz rechts auf dem Raben. Der Schädel liegt neben dem Raben.',
-    'Von links: Schablone auf Affe, Laterne auf Mond, Amulett auf Schädel, Kanister auf Rabe.',
+    'Der Kanister liegt an einem Rand, auf dem Raben. Welcher Rand passt, entscheidet die Schablone.',
+    'Der Schädel liegt neben Mond und Rabe zugleich, also zwischen den beiden. Damit stehen die Runen fast fest.',
   ],
 };
 
@@ -865,7 +885,26 @@ const TAKE = {
   schablone: { text: 'Zettel eingesteckt. Lauter Winkel und Punkte. Sieht nach Geheimschrift aus.' },
   amulett:   { text: 'Amulett genommen. Der Stein ist warm. Hinter dem Forsthaus knarrt eine Tür: Raum 46.' },
 };
-function takeButton(id, label) { return has(id) ? '' : '<div class="row"><button class="btn primary" data-act="take" data-id="' + id + '">' + label + '</button></div>'; }
+/** Descriptions of scene objects, shown only when Konrad taps the object. */
+const LOOK = {
+  tor: () => S.gate ? 'Der Bolzen ist zurückgeschnappt. Hinter dem Tor führt ein Pfad zur Schlucht.' : 'Ein Stahltor mit Vorhängeschloss. Vier Rädchen, vier Ziffern.',
+  holzkiste: () => !S.herring ? 'Mit Kreide beschriftet: NICHT ÖFFNEN. Ein vierstelliges Zahlenschloss.'
+    : has('hering') ? 'Offen. Leer bis auf einen Geruch nach Dill, der nie wieder weggeht.' : 'Offen. Darin liegt ein eingelegter roter Hering.',
+  generator: () => !S.kanUsed ? 'Der Tank ist leer. Daneben stehen ein 5-Liter-Eimer und eine 3-Liter-Kanne. Was fehlt, ist Sprit.'
+    : S.jugsDone ? 'Er hustet, rattert, läuft. Im ganzen Haus brennt Licht.' : 'Er braucht genau 4 Liter, direkt aus dem Kanister.',
+  blau: () => has('amulett') ? 'Leer. Nur noch ein Abdruck im Samt.' : 'Auf Samt liegt ein Amulett mit einem roten Stein.',
+};
+/** Red jerry can the troll holds out after BIERJUNGE; tapping it takes the Kanister (and leaves the bridge when loc is set). */
+function kanisterOffer(loc) {
+  return '<path d="M150 204 Q140 198 133 190" stroke="#4b6345" stroke-width="10" stroke-linecap="round" fill="none"/>' +
+    '<g class="hot" data-act="take" data-id="kanister"' + (loc ? ' data-loc="' + loc + '"' : '') + ' role="button" aria-label="Kanister nehmen">' +
+      '<rect x="112" y="168" width="36" height="44" fill="transparent"/>' +
+      '<path d="M116 182 H134 L138 186 V212 H116Z" fill="#9b3328" stroke="#5e1d17" stroke-width="1.2"/>' +
+      '<path d="M119 190 L133 206 M133 190 L119 206" stroke="#7a2a22" stroke-width="1.6"/>' +
+      '<rect x="119" y="177" width="7" height="5" fill="#5e1d17"/><path d="M128 182 V178 H135 V182" stroke="#5e1d17" stroke-width="2" fill="none"/>' +
+      '<ellipse cx="132" cy="180" rx="5" ry="4" fill="#5f7c57"/>' +
+    '</g>';
+}
 // A speech bubble waits while a message is on screen, otherwise the message would hide it.
 let pendingBubble = null;
 /** Shows the waiting speech bubble once the last message is read, if Konrad is still in the same place. */
@@ -1192,15 +1231,15 @@ function artTor() {
     '<path d="M0 192 Q180 176 360 194 V220 H0Z" fill="#0b1410"/>' +
     '<g fill="#2b302d" stroke="#1a1e1c"><rect x="98" y="54" width="30" height="146"/><rect x="92" y="46" width="42" height="10"/><rect x="232" y="54" width="30" height="146"/><rect x="226" y="46" width="42" height="10"/></g>' +
     '<path d="M100 80 H126 M100 110 H126 M100 140 H126 M100 170 H126 M234 80 H260 M234 110 H260 M234 140 H260 M234 170 H260" stroke="#1d2120" stroke-width="1"/>' +
-    '<g class="' + cls + '">' +
+    '<g class="hot ' + cls + '" data-act="look" data-id="tor" role="button" aria-label="Tor"><rect x="128" y="66" width="104" height="130" fill="transparent"/>' +
       '<g class="wing-l" stroke="#59605b" stroke-width="2.6" fill="none"><rect x="128" y="72" width="52" height="124"/><path d="M128 102 H180 M128 168 H180"/>' + bars('l') + '</g>' +
       '<g class="wing-r" stroke="#59605b" stroke-width="2.6" fill="none"><rect x="180" y="72" width="52" height="124"/><path d="M180 102 H232 M180 168 H232"/>' + bars('r') + '</g>' +
       '<g class="padlock"><path d="M174 128 V120 a6 6 0 0 1 12 0 V128" stroke="#a7aea9" stroke-width="3" fill="none"/><rect x="169" y="126" width="22" height="18" rx="3" fill="#b08a3a" stroke="#6d5420"/><circle cx="180" cy="133" r="2.3" fill="#2a2118"/><rect x="179" y="133" width="2" height="6" fill="#2a2118"/></g>' +
     '</g>' +
     (has('laterne') ? '' : '<g class="hot" data-act="take" data-id="laterne" role="button" aria-label="Laterne"><rect x="234" y="90" width="28" height="44" fill="transparent"/><g transform="translate(247 104) scale(1.6)"><use href="#p-lan"/></g></g>') +
     (S.uvTaken ? '' : '<g class="hot" data-act="takeUv" role="button" aria-label="UV-Lampe aufheben"><rect x="40" y="184" width="50" height="26" fill="transparent"/><g transform="rotate(-18 64 198)"><rect x="54" y="194" width="22" height="7" rx="2" fill="#3a3550"/><rect x="74" y="192" width="5" height="11" rx="1" fill="#6c63a8"/><ellipse cx="80" cy="197.5" rx="1.5" ry="5" fill="#b9a6ff" class="glow-pulse"/></g></g>') +
-    '<g transform="translate(272 170)"><rect width="56" height="34" fill="#5a4129" stroke="#3a2a19"/><path d="M0 11 H56 M0 22 H56" stroke="#3a2a19"/>' +
-      (S.herring ? '<path d="M-2 0 L22 -18 L58 -6 L56 0Z" fill="#6b4f33" stroke="#3a2a19"/><path d="M30 0 Q38 -10 46 -4 L50 -9 L50 2Z" fill="#c0392b"/>' : '<rect y="-6" width="56" height="7" fill="#6b4f33" stroke="#3a2a19"/><text x="28" y="20" text-anchor="middle" font-size="7.5" fill="#efece4" font-family="IM Fell English SC, serif">NICHT ÖFFNEN</text>') + '</g>' +
+    '<g class="hot" transform="translate(272 170)" data-act="look" data-id="holzkiste" role="button" aria-label="Holzkiste"><rect width="56" height="34" fill="#5a4129" stroke="#3a2a19"/><path d="M0 11 H56 M0 22 H56" stroke="#3a2a19"/>' +
+      (S.herring ? '<path d="M-2 0 L22 -18 L58 -6 L56 0Z" fill="#6b4f33" stroke="#3a2a19"/>' + (has('hering') ? '' : '<g class="hot" data-act="take" data-id="hering" role="button" aria-label="Hering nehmen"><rect x="18" y="-22" width="44" height="30" fill="transparent"/><path d="M30 0 Q38 -10 46 -4 L50 -9 L50 2Z" fill="#c0392b"/></g>') : '<rect y="-6" width="56" height="7" fill="#6b4f33" stroke="#3a2a19"/><text x="28" y="20" text-anchor="middle" font-size="7.5" fill="#efece4" font-family="IM Fell English SC, serif">NICHT ÖFFNEN</text>') + '</g>' +
     uvText(101, 156, 'I·1')
   );
 }
@@ -1222,8 +1261,8 @@ function trollBeer() {
       '<ellipse cx="1" cy="21" rx="6.5" ry="5.5" fill="#5f7c57"/><path d="M3 17.5 h4 M3.5 21 h4 M3 24.5 h3.5" stroke="#3b5236" stroke-width="1.1" stroke-linecap="round"/>' +
     '</g></g>';
 }
-/** The bridge troll; interactive on the stage, a plain picture in the BIERJUNGE sheet. */
-function trollArt(interactive) {
+/** The bridge troll; interactive on the stage, a plain picture in the BIERJUNGE sheet, holding out the Kanister until it is taken. */
+function trollArt(interactive, kanisterLoc = '') {
   const beer = trollCheers || S.seen.bierjunge;
   return '<g' + (interactive ? ' class="hot" data-act="troll" role="button" aria-label="Troll"' : '') + '>' +
       '<g class="breath">' +
@@ -1240,6 +1279,7 @@ function trollArt(interactive) {
         '<path d="M159 180 Q180 192 201 180" stroke="#2b3d27" stroke-width="2.8" fill="none" stroke-linecap="round"/>' +
         '<path d="M165 182 L167.5 172 L171 183 Z M195 182 L192.5 172 L189 183 Z" fill="#efe8c9"/>' +
         (beer ? trollBeer() : '') +
+        (S.seen.bierjunge && !has('kanister') ? kanisterOffer(kanisterLoc) : '') +
       '</g></g>';
 }
 function artBridge() {
@@ -1300,7 +1340,7 @@ function artForsthaus() {
     '<g class="ghost' + (once.has('ghost') ? ' show' : '') + '"><path d="M62 145 Q62 132 73 131 Q84 132 84 145Z" fill="#000"/><circle cx="73" cy="126" r="5.6" fill="#000"/><circle cx="71" cy="125.5" r=".8" fill="#fff"/><circle cx="75" cy="125.5" r=".8" fill="#fff"/></g>' +
     '<rect x="102" y="138" width="26" height="56" fill="#2a1d14"/><circle cx="123" cy="167" r="1.6" fill="#c9a24a"/>' +
     '<g><path d="M214 124 L340 112 L340 196 L214 196Z" fill="#2d241c"/><path d="M208 126 L346 108" stroke="#1b140f" stroke-width="5"/><rect x="222" y="132" width="110" height="64" fill="#120d0a"/>' +
-      '<g class="' + (lit ? 'gen-run' : '') + '"><rect x="236" y="156" width="54" height="36" rx="3" fill="#6b6f3a" stroke="#3a3d1f"/><path d="M242 164 H284 M242 170 H284 M242 176 H284" stroke="#3a3d1f"/><rect x="284" y="146" width="5" height="12" fill="#3a3d1f"/>' +
+      '<g class="hot ' + (lit ? 'gen-run' : '') + '" data-act="look" data-id="generator" role="button" aria-label="Generator"><rect x="236" y="156" width="54" height="36" rx="3" fill="#6b6f3a" stroke="#3a3d1f"/><path d="M242 164 H284 M242 170 H284 M242 176 H284" stroke="#3a3d1f"/><rect x="284" y="146" width="5" height="12" fill="#3a3d1f"/>' +
       '<circle cx="250" cy="185" r="3" fill="' + (lit ? '#5fcb8f' : '#3a0f0f') + '"/></g>' +
       (lit ? '<circle class="puff" cx="287" cy="142" r="4" fill="#4c524e"/><circle class="puff b" cx="287" cy="142" r="4" fill="#4c524e"/>' : '') + '</g>' +
     '<g class="foerster hot ' + fState + '" transform="' + fPos + '" data-act="foerster" role="button" aria-label="Förster">' +
@@ -1317,6 +1357,9 @@ function artForsthaus() {
       '</g>' +
       '<g class="f-arm"><path d="M13 -60 L22 -46" stroke="#3f5a35" stroke-width="6" stroke-linecap="round"/><path d="M22 -46 L30 -84" stroke="#6b4f33" stroke-width="3" stroke-linecap="round"/><path d="M26 -86 Q36 -94 40 -82 Q34 -80 30 -76Z" fill="#a7aea9" stroke="#59605b"/></g>' +
     '</g>' +
+    (S.fenceDone && !has('schablone') ? '<g class="hot" data-act="take" data-id="schablone" role="button" aria-label="Zettel nehmen"><rect x="292" y="156" width="40" height="38" fill="transparent"/>' +
+      '<g transform="rotate(-12 311 176)"><rect x="302" y="165" width="18" height="22" fill="#e8dcb0" stroke="#8a7a55" stroke-width=".8"/><path d="M305 170 h5 v5 M313 170 l4 4 M305 180 h4 M312 179 v5 h5" stroke="#5a4a30" stroke-width="1" fill="none"/></g>' +
+      '<circle cx="320" cy="176" r="3.6" fill="#e2c4a0"/></g>' : '') +
     uvText(254, 150, 'III·9', -4)
   );
 }
@@ -1350,15 +1393,18 @@ function artSalon() {
 function chestSvg(b, state) {
   const inside = '<path d="M10 36 L90 36 L86 42 L14 42Z" fill="#050505"/>';
   const gem = '<g class="gem"><circle cx="50" cy="30" r="16" fill="url(#g-gem)"/><circle cx="50" cy="31" r="5" fill="#ff2a3a" stroke="#c9a24a" stroke-width="1.6"/><path d="M50 21 V26" stroke="#c9a24a" stroke-width="1.2"/></g>';
+  const amulettWaits = b.id === 'blau' && (state === 'lid-open' || state === 'lid-opening') && S.boxDone && !has('amulett');
+  // The tap target sits above the tilted lid, which would otherwise catch the tap meant for the stone.
+  const amulettTarget = '<circle cx="50" cy="28" r="22" fill="transparent" data-act="take" data-id="amulett" role="button" aria-label="Amulett nehmen"/>';
   return '<svg viewBox="0 0 100 86" class="' + state + '" aria-hidden="true">' +
     '<ellipse cx="50" cy="82" rx="44" ry="4" fill="#000" opacity=".45"/>' + inside +
-    (b.id === 'blau' && (state === 'lid-open' || state === 'lid-opening') && S.boxDone ? gem : '') +
+    (amulettWaits ? gem : '') +
     '<rect x="8" y="36" width="84" height="44" rx="4" fill="' + b.c1 + '" stroke="' + b.trim + '" stroke-width="1.6"/>' +
     '<rect x="8" y="52" width="84" height="4" fill="' + b.trim + '" opacity=".85"/>' +
     '<path d="M8 40 L14 36 M92 40 L86 36 M8 76 L14 80 M92 76 L86 80" stroke="' + b.trim + '" stroke-width="3"/>' +
     '<rect x="43" y="44" width="14" height="16" rx="2" fill="#c9a24a" stroke="#8a6d2a"/><circle cx="50" cy="50" r="2" fill="#222"/><rect x="49.2" y="50" width="1.6" height="5" fill="#222"/>' +
     '<g class="lid"><path d="M6 37 Q6 14 50 12 Q94 14 94 37Z" fill="' + b.c2 + '" stroke="' + b.trim + '" stroke-width="1.6"/><path d="M8 30 Q50 22 92 30" stroke="' + b.trim + '" stroke-width="2" fill="none"/><path d="M48 12 V37 M52 12 V37" stroke="' + b.trim + '" stroke-width="1.2" opacity=".7"/></g>' +
-    '</svg>';
+    (amulettWaits ? amulettTarget : '') + '</svg>';
 }
 
 function artAltar() {
@@ -1501,28 +1547,21 @@ function sceneTor() {
       wheels('gate', S.lock) +
       '<div class="row center"><button class="btn primary" data-act="gateTry">Tor öffnen</button></div></div>';
   } else {
-    h += '<div class="card"><h3>Das Tor steht offen</h3><p>Der Bolzen ist zurückgeschnappt. Hinter dem Tor führt ein Pfad zur Schlucht.</p>' +
+    h += '<div class="card"><h3>Das Tor steht offen</h3>' +
       '<div class="row"><button class="btn" data-act="go" data-loc="bruecke">Zur Brücke</button></div></div>';
   }
-  if (!has('laterne')) h += '<div class="card"><h3>Am Pfosten</h3><p>Rechts außen am Pfosten hängt eine alte Petroleumlaterne.</p>' + takeButton('laterne', 'Laterne nehmen') + '</div>';
-  if (!S.uvTaken) h += '<div class="card"><h3>Am Boden</h3><p>Zwischen den Wurzeln liegt eine UV-Taschenlampe. Noch warm.</p><div class="row"><button class="btn" data-act="takeUv">Aufheben</button></div></div>';
-  h += '<div class="card danger-box"><h3>Kleine Holzkiste</h3>';
   if (!S.herring) {
-    h += '<div class="chalk">NICHT ÖFFNEN</div><p>Mit Kreide beschriftet. Ein vierstelliges Zahlenschloss.</p>' + wheels('herring', S.hlock) +
-      '<div class="row center"><button class="btn" data-act="herringTry">Kiste öffnen</button></div>';
-  } else {
-    h += has('hering') ? '<p>Offen. Leer bis auf einen Geruch nach Dill, der nie wieder weggeht.</p>'
-      : '<p>Offen. Darin liegt ein eingelegter roter Hering.</p>' + takeButton('hering', 'Hering nehmen');
+    h += '<div class="card danger-box"><h3>Kleine Holzkiste</h3><div class="chalk">NICHT ÖFFNEN</div>' + wheels('herring', S.hlock) +
+      '<div class="row center"><button class="btn" data-act="herringTry">Kiste öffnen</button></div></div>';
   }
-  return h + '</div>';
+  return h;
 }
 
 function sceneBridge() {
   let h = '<h2 class="place">Die Hängebrücke</h2><p class="lede">Eine morsche Brücke über eine Schlucht. Unten: Nebel. Und ein Troll.</p>' + artBridge();
   if (!S.lit) return h + '<div class="card"><p>Stockdunkel. Nur zwei Augen unter der Brücke. Ohne Licht geht hier keiner rüber.</p></div>';
   if (S.bridgeDone) {
-    const offer = S.seen.bierjunge && !has('kanister') ? '<p>Der Troll hält dir immer noch einen Kanister hin.</p>' + takeButton('kanister', 'Kanister nehmen') : '';
-    return h + '<div class="card found"><h3>Drüben</h3><p>Alle fünf sind drüben. Der Pfad führt weiter zum Forsthaus.</p>' + offer +
+    return h + '<div class="card found"><h3>Drüben</h3><p>Alle fünf sind drüben. Der Pfad führt weiter zum Forsthaus.</p>' +
       '<div class="row"><button class="btn" data-act="go" data-loc="forsthaus">Zum Forsthaus</button></div></div>';
   }
   const b = S.bridge;
@@ -1554,8 +1593,8 @@ function sceneForsthaus() {
       '<div class="opts">' + f.opts.map((o, i) => '<button class="opt" data-act="retort" data-i="' + i + '">' + esc(o) + '</button>').join('') + '</div></div>';
     return h;
   }
-  h += '<div class="card"><div class="say"><b>Marcel, ohne Bart</b>»Ja, ich bin’s. Nein, ich will nicht drüber reden. Hier, der Zettel ist für das Salon-Gedöns. Ich kann den eh nicht lesen.«</div>' + takeButton('schablone', 'Zettel nehmen') + '</div>';
-  if (!S.kanUsed) return h + '<div class="card"><h3>Generator</h3><p>Der Tank ist leer. Daneben stehen ein 5-Liter-Eimer und eine 3-Liter-Kanne. Was fehlt, ist Sprit.</p></div>';
+  h += '<div class="card"><div class="say"><b>Marcel, ohne Bart</b>»Ja, ich bin’s. Nein, ich will nicht drüber reden. Hier, der Zettel ist für das Salon-Gedöns. Ich kann den eh nicht lesen.«</div></div>';
+  if (!S.kanUsed) return h;
   if (S.jugsDone) {
     return h + '<div class="card found"><h3>Generator läuft</h3><p>Er hustet, rattert, läuft. Im ganzen Haus geht das Licht an, auch im Salon.</p>' +
       '<div class="row"><button class="btn" data-act="go" data-loc="salon">In den Salon</button></div></div>';
@@ -1596,10 +1635,8 @@ function sceneSalon() {
   }).join('');
   h += '<div class="card"><h3>Drei Kisten auf dem Tisch</h3><div class="chests">' + chests + '</div>';
   if (S.boxDone) {
-    h += has('amulett')
-      ? '<p>In der blauen Kiste lag ein Amulett mit einem roten Stein. Hinter dem Forsthaus knarrt eine Tür auf: Raum 46.</p><div class="row"><button class="btn" data-act="go" data-loc="altar">Zu Raum 46</button></div></div>'
-      : '<p>In der blauen Kiste liegt auf Samt ein Amulett mit einem roten Stein.</p>' + takeButton('amulett', 'Amulett nehmen') + '</div>';
-    return h;
+    h += has('amulett') ? '<div class="row"><button class="btn" data-act="go" data-loc="altar">Zu Raum 46</button></div>' : '';
+    return h + '</div>';
   }
   h += '<p class="score">Auf jedem Deckel ist eine Gravur. Tippe eine Kiste an, um sie auszuwählen.</p>' +
     BOXES.map(b => '<div class="engr' + (S.boxSel === b.id ? ' sel' : '') + '"><span class="sw" style="background:' + b.c1 + ';border:1px solid ' + b.trim + '"></span>' + pigpenText(b.text) + '</div>').join('');
@@ -1747,9 +1784,9 @@ const actions = {
   bierjunge(el) {
     S.seen.bierjunge = true; trollCheers = false;
     Sound.tone(220, 0.3, 'triangle', 0.12);
-    openSheet('<h2>Der Troll ist zufrieden</h2><svg class="sheet-troll" viewBox="112 118 140 104" aria-hidden="true">' + trollArt(false) + '</svg>' +
+    openSheet('<h2>Der Troll ist zufrieden</h2><svg class="sheet-troll" viewBox="112 118 140 104">' + trollArt(false, el.dataset.loc) + '</svg>' +
       '<div class="say"><b>Troll</b>»Hängt! Respekt, Konrad. Hier, nimm den mit. Für den Generator im Forsthaus. Prost!«</div>' +
-      '<button class="btn primary" data-act="take" data-id="kanister" data-loc="' + el.dataset.loc + '">Kanister nehmen</button>');
+      '<p class="score">Tipp auf den Kanister, um ihn zu nehmen.</p>');
   },
   take(el) {
     const id = el.dataset.id, item = TAKE[id];
@@ -1781,7 +1818,7 @@ const actions = {
   herringTry() {
     if (matches(S.hlock.join(''), ANSWER.herring)) {
       S.herring = true; Sound.clunk(); Sound.splash(); unlock('hering');
-      toast('In der Kiste: ein roter Hering. Eingelegt. Wir haben gesagt: NICHT öffnen.', 'ok');
+      toast('In der Kiste: ein roter Hering. Eingelegt.', 'ok');
     } else {
       failure('Die Kiste bleibt zu. Steht ja auch drauf.', 4); afterRender.push(() => shake('#herringLock'));
     }
@@ -1891,8 +1928,9 @@ const actions = {
     }
   },
   jugReset() { S.jugs = [8, 0, 0]; S.jugSel = -1; S.jugMoves = 0; Sound.pour(); },
+  look(el) { toast(LOOK[el.dataset.id](), '', ''); },
   chest(el) {
-    if (S.boxDone) return;
+    if (S.boxDone) { if (el.dataset.id === 'blau') toast(LOOK.blau(), '', ''); return; }
     if (!S.seen.chestRush && salonArrivedAt && Date.now() - salonArrivedAt < CHEST_RUSH_MS) {
       S.seen.chestRush = true;
       Fx.lunge();
@@ -1994,7 +2032,7 @@ function openItem(id) {
   const it = ITEMS[id];
   const extra = id === 'schablone' ? '<div class="keygrid">' + Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)).map(l => '<div>' + pigpenSvg(l) + '<b>' + l + '</b></div>').join('') + '</div>' : '';
   const useLabel = id === 'uv' ? (S.uv ? 'Ausschalten' : 'Einschalten') : 'Hier benutzen';
-  openSheet('<h2>' + esc(it.name) + '</h2><p>' + esc(it.desc) + '</p>' + extra +
+  openSheet('<h2>' + esc(it.name) + '</h2><svg class="item-art" viewBox="0 0 100 100" aria-hidden="true">' + ITEM_ART[id] + '</svg><p>' + esc(it.desc) + '</p>' + extra +
     '<div class="row">' + (id === 'schablone' ? '' : '<button class="btn primary" data-act="use" data-id="' + id + '">' + useLabel + '</button>') +
     '<button class="btn ghost" data-act="close">Schließen</button></div>');
 }
@@ -2080,7 +2118,7 @@ function finishAchievements() {
 }
 
 /* ================= event wiring ================= */
-const SHEET_ACTIONS = ['funk', 'menu', 'funkArchive', 'installApp','item','boxAsk', 'rules', 'resetAsk', 'hint', 'fenceAnswer', 'sound', 'troll', 'foerster'];
+const SHEET_ACTIONS = ['look', 'funk','menu', 'funkArchive', 'installApp','item','boxAsk', 'rules', 'resetAsk', 'hint', 'fenceAnswer', 'sound', 'troll', 'foerster'];
 const TAP_HEAVY = ['gateWheel', 'herringWheel', 'slot', 'jug', 'person', 'cross', 'chest', 'troll', 'foerster'];
 document.addEventListener('click', e => {
   if (!instanceRunning) return;

@@ -5,16 +5,16 @@ Der Timer startet nach der Einweisung. Er bleibt stehen, solange die Seite nicht
 
 ## Ablauf und Lösungen
 
-Fundstücke landen nicht automatisch im Inventar: Konrad nimmt jedes selbst (Schaltfläche „… nehmen“ oder antippen).
+Fundstücke landen nicht automatisch im Inventar: Konrad nimmt jedes selbst, indem er es im Bild antippt. Es gibt keine „nehmen“-Schaltflächen. Beschreibungen von Dingen (Tor, Holzkiste, Generator, blaue Kiste nach dem Öffnen) erscheinen nur beim Antippen als Meldung, nicht als Text unter dem Bild. Im Inventar zeigt jeder Gegenstand beim Antippen ein Bild und seine Beschreibung.
 
 | # | Ort | Rätsel (Vorlage) | Lösung | Gibt |
 |---|---|---|---|---|
 | 0 | Einweisung | Hausregeln | Regel 3 („mindestens einer lügt, mindestens einer sagt die Wahrheit“) braucht man im Salon | – |
-| 1 | Tor | Zahlenschloss nach dem viralen „Crack the Code“-Rätsel, neue 4-stellige Instanz | **1289** | Weg zur Brücke. Die Laterne hängt außen am Pfosten und lässt sich jederzeit nehmen („Laterne nehmen“). |
-| 2 | Brücke | Brücke und Fackel, 5-Personen-Variante | Erst Laterne im Inventar benutzen. Nach seinem 3. Gang knickt Konrad um (Krankenwagen) und braucht danach 2 Minuten. Lösung: Konrad+Oliver rüber (3), Konrad zurück (1), Marcel+Olla rüber (12), Oliver zurück (3), Konrad+Oliver rüber (3, danach Krankenwagen), Konrad humpelt zurück (2), Konrad+Daniel rüber (6) = **30 Min.**, das Minimum. | Beim Verlassen: BIERJUNGE → „Hängt!“ → Troll gibt den Kanister, „Kanister nehmen“ |
-| 3a | Forsthaus | Beleidigungsfechten (Mechanik aus Monkey Island, eigene Texte) | 3 Treffer. Die richtige Antwort enthält dasselbe Schlüsselwort wie die Beleidigung (Tabelle unten). Nach einem Fehler sagt der Förster den richtigen Konter; verpasste Beleidigungen kommen öfter wieder. | Förster ist Marcel, verkleidet; „Zettel nehmen“ (Schablone) |
+| 1 | Tor | Zahlenschloss nach dem viralen „Crack the Code“-Rätsel, neue 4-stellige Instanz | **1289** | Weg zur Brücke. Die Laterne hängt außen am Pfosten und lässt sich jederzeit nehmen (im Bild antippen). Die UV-Lampe liegt links unten zwischen den Wurzeln. |
+| 2 | Brücke | Brücke und Fackel, 5-Personen-Variante | Erst Laterne im Inventar benutzen. Nach seinem 3. Gang knickt Konrad um (Krankenwagen) und braucht danach 2 Minuten. Lösung: Konrad+Oliver rüber (3), Konrad zurück (1), Marcel+Olla rüber (12), Oliver zurück (3), Konrad+Oliver rüber (3, danach Krankenwagen), Konrad humpelt zurück (2), Konrad+Daniel rüber (6) = **30 Min.**, das Minimum. | Beim Verlassen: BIERJUNGE → „Hängt!“ → Troll hält den Kanister hin, im Bild antippen. Schließt Konrad das Fenster, hält ihn der Troll auf der Brücke weiter hin. |
+| 3a | Forsthaus | Beleidigungsfechten (Mechanik aus Monkey Island, eigene Texte) | 3 Treffer. Die richtige Antwort enthält dasselbe Schlüsselwort wie die Beleidigung (Tabelle unten). Nach einem Fehler sagt der Förster den richtigen Konter; verpasste Beleidigungen kommen öfter wieder. | Förster ist Marcel, verkleidet; er hält den Zettel (Schablone) hin, im Bild antippen |
 | 3b | Forsthaus | Krug-Rätsel 8/5/3 (Tartaglia), Ziel: genau 4 Liter im Kanister | Kanister im Inventar benutzen, dann: K→E, E→Ka, Ka→K, E→Ka, K→E, E→Ka, Ka→K. K = Kanister 8, E = Eimer 5, Ka = Kanne 3. | Licht, Salon offen |
-| 4 | Salon | Drei-Kisten-Rätsel wie im Parlor von Blue Prince, Aussagen in Freimaurer-Schrift | Blau: „SCHWARZ IST LEER“, Weiß: „DER STEIN IST HIER“, Schwarz: „BLAU SAGT DIE WAHRHEIT“ → **blaue Kiste** | „Amulett nehmen“, erst dann öffnet Raum 46 |
+| 4 | Salon | Drei-Kisten-Rätsel wie im Parlor von Blue Prince, Aussagen in Freimaurer-Schrift | Blau: „SCHWARZ IST LEER“, Weiß: „DER STEIN IST HIER“, Schwarz: „BLAU SAGT DIE WAHRHEIT“ → **blaue Kiste** | Amulett in der offenen blauen Kiste antippen, erst dann öffnet Raum 46 |
 | 5 | Raum 46 | Mini-Logikgitter (Einstein-Rätsel) | Von links: **Schablone/Affe, Laterne/Mond, Amulett/Schädel, Kanister/Rabe** | Finale mit Gutschein |
 
 Warum Blau: Liegt der Stein in Weiß, sind alle drei Aussagen wahr. Liegt er in Schwarz, sind alle drei falsch. Beides verbietet Regel 3.
@@ -37,7 +37,7 @@ Fechten im Forsthaus: Der Förster nimmt zufällig Beleidigungen aus dieser List
 
 ## Roter Hering
 
-UV-Lampe am Tor aufheben und im Inventar einschalten. Sie geht nach 10 Sekunden von selbst wieder aus; die Sekunden zählen auf ihrem Symbol im Inventar herunter. Beim ersten Ausgehen erklärt eine Meldung den Akku, danach nicht mehr. Solange sie an ist, leuchten rote Ziffern: I·1 (Tor), II·9 (Brücke), III·9 (Forsthaus), IV·0 (Salon). Code **1990** (Erscheinungsjahr von „The Secret of Monkey Island“) öffnet die Kiste „NICHT ÖFFNEN“. Darin liegt ein eingelegter roter Hering („Hering nehmen“). Er ist nutzlos. Der Funk-Tipp an der gelösten Brücke deutet an, dass der Troll Hunger auf etwas Rotes, Eingelegtes hat. Bietet Konrad ihm den Hering an, gibt es das Achievement „Falsches Spiel, Kumpel“.
+UV-Lampe am Tor aufheben und im Inventar einschalten. Sie geht nach 10 Sekunden von selbst wieder aus; die Sekunden zählen auf ihrem Symbol im Inventar herunter. Beim ersten Ausgehen erklärt eine Meldung den Akku, danach nicht mehr. Solange sie an ist, leuchten rote Ziffern: I·1 (Tor), II·9 (Brücke), III·9 (Forsthaus), IV·0 (Salon). Code **1990** (Erscheinungsjahr von „The Secret of Monkey Island“) öffnet die Kiste „NICHT ÖFFNEN“. Darin liegt ein eingelegter roter Hering (in der offenen Kiste im Bild antippen). Er ist nutzlos. Der Funk-Tipp an der gelösten Brücke deutet an, dass der Troll Hunger auf etwas Rotes, Eingelegtes hat. Bietet Konrad ihm den Hering an, gibt es das Achievement „Falsches Spiel, Kumpel“.
 
 ## Insider und Schreckmomente
 
@@ -65,6 +65,10 @@ Die Stimme sind deine Aufnahmen „Recording (2)“ und „Recording (3)“, im 
 
 Jeder Ort hat ein Hintergrundgeräusch: Tor und Forsthaus Grillen, Brücke Wind, Salon Kaminfeuer, Raum 46 Herzschlag über einem tiefen Brummen. Außerhalb des Salons ruft ab und zu eine Eule. Der Herzschlag läuft alle 30 Sekunden für 8 Sekunden und wird mit der Prüfzeit schneller (60 Schläge pro Minute am Start, 150 bei 30:00, höchstens 170). Einmalige Effekte (Schrei, Stromausfall, Krankenwagen, Stimme) kommen dazu.
 
+## Netlify
+
+`build.sh` setzt auf der Netlify-Seite 48 Pixel Abstand unter die Inventarleiste, damit die Einblendung unten rechts nichts verdeckt. Im claude.ai-Artefakt gibt es diesen Abstand nicht.
+
 ## Gutschein
 
 Am Ende führt die Schaltfläche „Zum Escape Room“ auf https://www.escape-stories.de/gruselige-horror-escape-rooms/the-dark-forest/ (öffnet in neuem Tab).
@@ -72,7 +76,7 @@ Am Ende führt die Schaltfläche „Zum Escape Room“ auf https://www.escape-st
 ## Strafen und Tipps
 
 - Alle Meldungen (Funksprüche, Achievements, Hinweise) bleiben stehen, bis Konrad „Gelesen“ tippt. Es steht immer nur eine da; weitere warten dahinter („Gelesen · noch 2“). Die Funksprüche kommen von „Oli“, jeder nur einmal. Menü → „Funkprotokoll“ zeigt alle bisher gehörten Sprüche (keine Tipps).
-- Funk-Tipp: 2 Minuten Abzug, 3 Stufen pro Station (Salon 4). Die letzte Stufe verrät die Lösung.
+- Funk-Tipp: 2 Minuten Abzug, 3 Stufen pro Station (Salon 4). Kein Tipp verrät die Lösung, auch nicht der letzte, und keiner erwähnt Konrads Knöchel vorab.
 - Falsche Kiste im Salon: 10 Minuten. Falscher Altar: 1 Minute.
 - Achievements auf der Gutschein-Seite: Nicht erreichte zeigen nur den Namen, die Bedingung steht als „???“. Speedrun gibt es unter 10 Minuten Prüfzeit.
 - Schreckmomente hängen an Ereignissen, nie an der Uhr. Zeitbasiert sind nur das Ende der 30 Minuten und das Speedrun-Achievement.
