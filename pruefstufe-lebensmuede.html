@@ -595,6 +595,9 @@ const HINTS = {
   ],
 };
 
+/** Place names for the tips section of the Funkprotokoll, in game order; only paid tip lists appear here. */
+const HINT_PLACES = { tor: 'Tor', dunkel: 'Brücke', bruecke: 'Brücke', foerster: 'Förster', kanister: 'Forsthaus', jugs: 'Generator', salon: 'Salon', altar: 'Raum 46' };
+
 const BRIEFING_RULES = [
   'Nichts über Kopfhöhe. Gilt auch für Bäume.',
   'Keine Gewalt. Schlösser gehen auf, wenn der Code stimmt, nicht wenn du fester drückst.',
@@ -1997,10 +2000,18 @@ const actions = {
       '<div class="row"><button class="btn ghost" data-act="close">Schließen</button></div>');
   },
   funkArchive() {
-    const list = S.funkLog.length
-      ? '<ol class="funklog">' + S.funkLog.map(t => '<li>' + esc(t) + '</li>').join('') + '</ol>'
-      : '<p class="hint-line">Noch kein Funkspruch. Oli schweigt. Noch.</p>';
-    openSheet('<h2>Funkprotokoll</h2><p class="hint-line" style="text-align:left">Alles, was Oli bisher gefunkt hat.</p>' + list + '<button class="btn ghost" data-act="menu">Zurück</button>');
+    const section = (title, items, empty) => '<h3>' + title + '</h3>' + (items.length
+      ? '<ol class="funklog">' + items.map(t => '<li>' + t + '</li>').join('') + '</ol>'
+      : '<p class="hint-line" style="text-align:left">' + empty + '</p>');
+    const tips = Object.keys(HINT_PLACES).flatMap(key => HINTS[key].slice(0, S.hints[key] || 0).map(t => '<b>' + HINT_PLACES[key] + ':</b> ' + esc(t)))
+      .concat(S.fenceAnswers.map(i => '<b>' + HINT_PLACES.foerster + ':</b> Auf „' + esc(INSULTS[i].insult) + '“ sagt man: „' + esc(INSULTS[i].retort) + '“'));
+    const earned = Object.keys(S.ach).filter(id => ACHIEVEMENTS[id]).sort((a, b) => S.ach[a] - S.ach[b])
+      .map(id => '<b>' + esc(ACHIEVEMENTS[id][0]) + ':</b> ' + esc(ACHIEVEMENTS[id][1]));
+    openSheet('<h2>Funkprotokoll</h2>' +
+      section('Funksprüche', S.funkLog.map(esc), 'Noch kein Funkspruch. Oli schweigt. Noch.') +
+      section('Tipps', tips, 'Noch keinen Tipp geholt.') +
+      section('Achievements', earned, 'Noch keins.') +
+      '<button class="btn ghost" data-act="menu">Zurück</button>');
   },
   rules() { openSheet('<h2>Hausregeln</h2>' + briefingRules() + '<button class="btn" data-act="close">Zurück in den Wald</button>'); },
   sound() { S.sound = !S.sound; if (S.sound) { Sound.init(); Ambience.start(); Sound.click(); } Ambience.apply(); actions.menu(); },

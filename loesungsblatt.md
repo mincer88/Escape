@@ -75,7 +75,7 @@ Am Ende führt die Schaltfläche „Zum Escape Room“ auf https://www.escape-st
 
 ## Strafen und Tipps
 
-- Alle Meldungen (Funksprüche, Achievements, Hinweise) bleiben stehen, bis Konrad „Gelesen“ tippt. Es steht immer nur eine da; weitere warten dahinter („Gelesen · noch 2“). Die Funksprüche kommen von „Oli“, jeder nur einmal. Menü → „Funkprotokoll“ zeigt alle bisher gehörten Sprüche (keine Tipps).
+- Alle Meldungen (Funksprüche, Achievements, Hinweise) bleiben stehen, bis Konrad „Gelesen“ tippt. Es steht immer nur eine da; weitere warten dahinter („Gelesen · noch 2“). Die Funksprüche kommen von „Oli“, jeder nur einmal. Menü → „Funkprotokoll“ hat drei Abschnitte: Funksprüche (alle bisher gehörten), Tipps (nur die schon geholten, mit Ort, dazu gekaufte Fecht-Antworten) und Achievements (nur die schon erreichten, in der Reihenfolge des Erreichens). Nichts davon verrät, was noch kommt.
 - Funk-Tipp: 2 Minuten Abzug, 3 Stufen pro Station (Salon 4). Kein Tipp verrät die Lösung, auch nicht der letzte, und keiner erwähnt Konrads Knöchel vorab.
 - Falsche Kiste im Salon: 10 Minuten. Falscher Altar: 1 Minute.
 - Achievements auf der Gutschein-Seite: Nicht erreichte zeigen nur den Namen, die Bedingung steht als „???“. Speedrun gibt es unter 10 Minuten Prüfzeit.
