@@ -833,11 +833,11 @@ function give(id) { if (!S.inv.includes(id)) { S.inv.push(id); S.newItem = id; }
 function has(id) { return S.inv.includes(id); }
 // Items lie in the scene or are handed over; Konrad takes each one himself.
 const TAKE = {
-  laterne:   { ready: () => S.gate, wait: 'Die Laterne hängt hinter dem Gitter. Erst das Tor.', text: 'Laterne vom Pfosten genommen. Riecht nach Petroleum.' },
-  hering:    { ready: () => S.herring, text: 'Hering eingesteckt. Deine Tasche riecht jetzt nach Ostsee.' },
-  kanister:  { ready: () => S.seen.bierjunge, text: 'Kanister genommen. Schwer. Riecht nach Diesel.' },
-  schablone: { ready: () => S.fenceDone, text: 'Zettel eingesteckt. Lauter Winkel und Punkte. Sieht nach Geheimschrift aus.' },
-  amulett:   { ready: () => S.boxDone, text: 'Amulett genommen. Der Stein ist warm. Hinter dem Forsthaus knarrt eine Tür: Raum 46.' },
+  laterne:   { text: 'Laterne vom Pfosten genommen. Riecht nach Petroleum.' },
+  hering:    { text: 'Hering eingesteckt. Deine Tasche riecht jetzt nach Ostsee.' },
+  kanister:  { text: 'Kanister genommen. Schwer. Riecht nach Diesel.' },
+  schablone: { text: 'Zettel eingesteckt. Lauter Winkel und Punkte. Sieht nach Geheimschrift aus.' },
+  amulett:   { text: 'Amulett genommen. Der Stein ist warm. Hinter dem Forsthaus knarrt eine Tür: Raum 46.' },
 };
 function takeButton(id, label) { return has(id) ? '' : '<div class="row"><button class="btn primary" data-act="take" data-id="' + id + '">' + label + '</button></div>'; }
 function bubble(text) {
@@ -1465,10 +1465,10 @@ function sceneTor() {
       wheels('gate', S.lock) +
       '<div class="row center"><button class="btn primary" data-act="gateTry">Tor öffnen</button></div></div>';
   } else {
-    h += '<div class="card"><h3>Das Tor steht offen</h3><p>Der Bolzen ist zurückgeschnappt. Hinter dem Tor führt ein Pfad zur Schlucht.' + (has('laterne') ? '' : ' Am Pfosten hängt eine alte Laterne.') + '</p>' +
-      takeButton('laterne', 'Laterne nehmen') +
+    h += '<div class="card"><h3>Das Tor steht offen</h3><p>Der Bolzen ist zurückgeschnappt. Hinter dem Tor führt ein Pfad zur Schlucht.</p>' +
       '<div class="row"><button class="btn" data-act="go" data-loc="bruecke">Zur Brücke</button></div></div>';
   }
+  if (!has('laterne')) h += '<div class="card"><h3>Am Pfosten</h3><p>Rechts außen am Pfosten hängt eine alte Petroleumlaterne.</p>' + takeButton('laterne', 'Laterne nehmen') + '</div>';
   if (!S.uvTaken) h += '<div class="card"><h3>Am Boden</h3><p>Zwischen den Wurzeln liegt eine UV-Taschenlampe. Noch warm.</p><div class="row"><button class="btn" data-act="takeUv">Aufheben</button></div></div>';
   h += '<div class="card danger-box"><h3>Kleine Holzkiste</h3>';
   if (!S.herring) {
@@ -1716,7 +1716,6 @@ const actions = {
   take(el) {
     const id = el.dataset.id, item = TAKE[id];
     if (!item || has(id)) return;
-    if (!item.ready()) { toast(item.wait); return; }
     give(id); Sound.click(); buzz(30);
     toast(item.text, 'ok');
     if (id === 'amulett') setTimeout(() => Sound.creak(), 500);
@@ -1728,7 +1727,7 @@ const actions = {
     if (matches(S.lock.join(''), ANSWER.lock)) {
       S.gate = true; stress(-12); once.add('gate');
       Sound.clunk(); setTimeout(() => Sound.creak(), 500); setTimeout(() => Sound.ok(), 1500); buzz(80);
-      toast('Das Schloss fällt, das Tor knarrt auf. Am Pfosten hängt eine Laterne.', 'ok');
+      toast('Das Schloss fällt, das Tor knarrt auf. Dahinter führt ein Pfad zur Schlucht.', 'ok');
       window.scrollTo(0, 0);
     } else {
       const unheard = QUIPS.filter(q => !S.funkLog.includes(q));

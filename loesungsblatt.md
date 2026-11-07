@@ -10,7 +10,7 @@ Fundstücke landen nicht automatisch im Inventar: Konrad nimmt jedes selbst (Sch
 | # | Ort | Rätsel (Vorlage) | Lösung | Gibt |
 |---|---|---|---|---|
 | 0 | Einweisung | Hausregeln | Regel 3 („mindestens einer lügt, mindestens einer sagt die Wahrheit“) braucht man im Salon | – |
-| 1 | Tor | Zahlenschloss nach dem viralen „Crack the Code“-Rätsel, neue 4-stellige Instanz | **1289** | Laterne am Pfosten, „Laterne nehmen“ |
+| 1 | Tor | Zahlenschloss nach dem viralen „Crack the Code“-Rätsel, neue 4-stellige Instanz | **1289** | Weg zur Brücke. Die Laterne hängt außen am Pfosten und lässt sich jederzeit nehmen („Laterne nehmen“). |
 | 2 | Brücke | Brücke und Fackel, 5-Personen-Variante | Erst Laterne im Inventar benutzen. Nach seinem 3. Gang knickt Konrad um (Krankenwagen) und braucht danach 2 Minuten. Lösung: Konrad+Oliver rüber (3), Konrad zurück (1), Marcel+Olla rüber (12), Oliver zurück (3), Konrad+Oliver rüber (3, danach Krankenwagen), Konrad humpelt zurück (2), Konrad+Daniel rüber (6) = **30 Min.**, das Minimum. | Beim Verlassen: BIERJUNGE → „Hängt!“ → Troll gibt den Kanister, „Kanister nehmen“ |
 | 3a | Forsthaus | Beleidigungsfechten (Mechanik aus Monkey Island, eigene Texte) | 3 Treffer. Die richtige Antwort enthält dasselbe Schlüsselwort wie die Beleidigung (Tabelle unten). Nach einem Fehler sagt der Förster den richtigen Konter; verpasste Beleidigungen kommen öfter wieder. | Förster ist Marcel, verkleidet; „Zettel nehmen“ (Schablone) |
 | 3b | Forsthaus | Krug-Rätsel 8/5/3 (Tartaglia), Ziel: genau 4 Liter im Kanister | Kanister im Inventar benutzen, dann: K→E, E→Ka, Ka→K, E→Ka, K→E, E→Ka, Ka→K. K = Kanister 8, E = Eimer 5, Ka = Kanne 3. | Licht, Salon offen |
