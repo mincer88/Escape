@@ -283,7 +283,7 @@ body.uv::after { content: ""; position: fixed; inset: 0; pointer-events: none; z
 .toast.ok { border-left-color: var(--ok); }
 .toast.achievement { border-left-color: var(--uv); }
 .toast b { display: block; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.toast.sticky { pointer-events: auto; display: grid; gap: 8px; }
+.toast { pointer-events: auto; display: grid; gap: 8px; }
 .toast-ok { justify-self: end; min-height: 40px; padding: 6px 16px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff14; color: inherit; font: inherit; font-size: .88rem; cursor: pointer; }
 .funklog { margin: 0; padding-left: 1.4em; display: grid; gap: 8px; font-family: var(--f-diary); font-size: 1.05rem; line-height: 1.35; }
 .sheet-troll { width: 100%; max-height: 32vh; background: #050907; border: 1px solid var(--line); border-radius: 12px; }
@@ -796,26 +796,23 @@ function hintsUsed() { return Object.values(S.hints).reduce((a, b) => a + b, 0) 
 /* ================= feedback ================= */
 const toastBox = document.getElementById('toasts');
 const fxLayer = document.getElementById('fx');
-function toast(text, kind = '', who = GAME_MASTER, sticky = false) {
+/** Shows a message that stays on screen until Konrad taps "Gelesen"; at most three at once, the oldest gives way. */
+function toast(text, kind = '', who = GAME_MASTER) {
   if ([...toastBox.children].some(t => t.dataset.text === text)) return;
   const el = document.createElement('div');
   el.dataset.text = text;
-  el.className = 'toast ' + kind + (sticky ? ' sticky' : '');
-  el.innerHTML = (who ? '<b>' + esc(who) + '</b>' : '') + esc(text) + (sticky ? '<button class="toast-ok" type="button">Gelesen</button>' : '');
-  if (sticky) el.querySelector('.toast-ok').addEventListener('click', () => el.remove());
+  el.className = 'toast ' + kind;
+  el.innerHTML = (who ? '<b>' + esc(who) + '</b>' : '') + esc(text) + '<button class="toast-ok" type="button">Gelesen</button>';
+  el.querySelector('.toast-ok').addEventListener('click', () => el.remove());
   toastBox.appendChild(el);
-  while (toastBox.children.length > 3) {
-    const oldest = [...toastBox.children].find(t => t !== el && !t.classList.contains('sticky')) || toastBox.firstChild;
-    oldest.remove();
-  }
-  if (!sticky) setTimeout(() => el.remove(), 4600);
+  while (toastBox.children.length > 3) toastBox.firstChild.remove();
 }
 /** Records a radio line for the Funkprotokoll in the menu; only lines Konrad has already heard end up there. */
 function logFunk(text) { if (!S.funkLog.includes(text)) S.funkLog.push(text); }
-/** A radio line from the game master: comes only once and stays on screen until Konrad taps "Gelesen". */
+/** A radio line from the game master: comes only once and is kept in the Funkprotokoll. */
 function radio(text, kind = '') {
   if (S.funkLog.includes(text)) return;
-  logFunk(text); save(); toast(text, kind, GAME_MASTER, true);
+  logFunk(text); save(); toast(text, kind);
 }
 function shake(selector) {
   const el = document.querySelector(selector);
@@ -1797,7 +1794,7 @@ const actions = {
       }
       if (ankleNow) {
         Fx.ambulance();
-        setTimeout(() => toast('Umgeknickt, obwohl es keine Stelle gab, an der man stolpern kann. Nach dem Röntgen im Krankenhaus gibt es ab jetzt eine Schiene. Weiter geht’s, aber du humpelst: ab jetzt 2 Minuten pro Gang.', 'bad', 'Sanitäter', true), 3600);
+        setTimeout(() => toast('Umgeknickt, obwohl es keine Stelle gab, an der man stolpern kann. Nach dem Röntgen im Krankenhaus gibt es ab jetzt eine Schiene. Weiter geht’s, aber du humpelst: ab jetzt 2 Minuten pro Gang.', 'bad', 'Sanitäter'), 3600);
       }
       if (allOver) {
         S.bridgeDone = true; stress(-15); Sound.ok();
@@ -1817,7 +1814,7 @@ const actions = {
       toast(pick(FORESTER_HIT), 'ok', 'Förster');
       if (f.wins >= FENCE_WINS_NEEDED) {
         S.fenceDone = true; Sound.ok();
-        setTimeout(() => toast('Der Förster reißt sich den Bart ab. Es ist Marcel. »Ich HASSE Verkleidungen. Das ist ja schlimmer als Karneval!« Dann hält Marcel dir einen Zettel hin.', 'ok', 'Förster', true), 700);
+        setTimeout(() => toast('Der Förster reißt sich den Bart ab. Es ist Marcel. »Ich HASSE Verkleidungen. Das ist ja schlimmer als Karneval!« Dann hält Marcel dir einen Zettel hin.', 'ok', 'Förster'), 700);
         return;
       }
     } else {

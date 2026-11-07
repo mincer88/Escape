@@ -67,7 +67,7 @@ Am Ende führt die Schaltfläche „Zum Escape Room“ auf https://www.escape-st
 
 ## Strafen und Tipps
 
-- Die Funksprüche kommen von „Oli“. Jeder kommt nur einmal und bleibt stehen, bis Konrad „Gelesen“ tippt. Menü → „Funkprotokoll“ zeigt alle bisher gehörten Sprüche (keine Tipps).
+- Alle Meldungen (Funksprüche, Achievements, Hinweise) bleiben stehen, bis Konrad „Gelesen“ tippt; höchstens drei auf einmal, die älteste weicht. Die Funksprüche kommen von „Oli“, jeder nur einmal. Menü → „Funkprotokoll“ zeigt alle bisher gehörten Sprüche (keine Tipps).
 - Funk-Tipp: 2 Minuten Abzug, 3 Stufen pro Station (Salon 4). Die letzte Stufe verrät die Lösung.
 - Falsche Kiste im Salon: 3 Minuten. Falscher Altar: 1 Minute.
 - Nach 30:00 läuft die Zeit rot weiter. Der Gutschein kommt immer.
