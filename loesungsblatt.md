@@ -50,10 +50,13 @@ UV-Lampe am Tor aufheben und im Inventar einschalten. Sie geht nach 10 Sekunden 
 | Fechten gewonnen | Der Förster reißt sich den Bart ab: Es ist Marcel, der Verkleidungen und Karneval hasst. Danach steht er ohne Bart da. |
 | Glas auf dem Salon-Kamin antippen | „IGITT! Das ist ja STILLES Wasser!“, Achievement „Igitt“, danach ein Funkspruch zum fehlenden Sprudel |
 | Laterne erlischt auf der Brücke (über 30 Min.) | Bildschirm schwarz, ein Gesicht springt heran, Schrei |
+| Eine Kiste in der ersten Minute im Salon angetippt (richtig oder falsch) | Jumpscare (Gesicht und Schrei), dann die Warnung „Wenn du nochmal rätst, wird das Spiel zurückgesetzt.“ Nur eine Drohung, es passiert nie. |
 | Falsche Kiste im Salon | Fledermäuse schießen heraus |
 | Erstes Schwarzlicht | Blutige Handabdrücke am Bildschirmrand, „Oh, Schwarzlicht“; beim ersten Ausgehen die Akku-Meldung, beim zweiten Einschalten der Farbwitz |
-| Nach 15 Minuten Prüfzeit | Stromausfall, Herzschlag, deine Aufnahme „Konrad“ |
-| Lange nichts getippt | Etwas huscht zwischen den Bäumen vorbei, dazu deine Aufnahme „Psssst … hier drüben“; beim nächsten Mal der dreiköpfige Affe |
+| Erstes Betreten des Salons | Stromausfall, Herzschlag, deine Aufnahme „Konrad“ |
+| Tor geöffnet | Etwas huscht zwischen den Bäumen vorbei, dazu deine Aufnahme „Psssst … hier drüben“ |
+| Hering genommen | „Hinter dir! Ein dreiköpfiger Affe!“ |
+| Jeder Ortswechsel | Kurz leuchten Augen zwischen den Bäumen im Hintergrund |
 | Funk-Sprüche zur Rot-Grün-Schwäche | z. B. „Die roten Ziffern, Konrad. Die ROTEN. Also auf keinen Fall die grünen.“ Kein Rätsel hängt von Rot oder Grün ab. |
 
 Die Stimme sind deine Aufnahmen „Recording (2)“ und „Recording (3)“, im Spiel eingebettet, etwas langsamer und tiefer, mit Hall. Sie laufen nur bei eingeschaltetem Ton.
@@ -70,7 +73,10 @@ Am Ende führt die Schaltfläche „Zum Escape Room“ auf https://www.escape-st
 
 - Alle Meldungen (Funksprüche, Achievements, Hinweise) bleiben stehen, bis Konrad „Gelesen“ tippt. Es steht immer nur eine da; weitere warten dahinter („Gelesen · noch 2“). Die Funksprüche kommen von „Oli“, jeder nur einmal. Menü → „Funkprotokoll“ zeigt alle bisher gehörten Sprüche (keine Tipps).
 - Funk-Tipp: 2 Minuten Abzug, 3 Stufen pro Station (Salon 4). Die letzte Stufe verrät die Lösung.
-- Falsche Kiste im Salon: 3 Minuten. Falscher Altar: 1 Minute.
+- Falsche Kiste im Salon: 10 Minuten. Falscher Altar: 1 Minute.
+- Achievements auf der Gutschein-Seite: Nicht erreichte zeigen nur den Namen, die Bedingung steht als „???“. Speedrun gibt es unter 10 Minuten Prüfzeit.
+- Schreckmomente hängen an Ereignissen, nie an der Uhr. Zeitbasiert sind nur das Ende der 30 Minuten und das Speedrun-Achievement.
+- Auf der Gutschein-Seite steht direkt unter dem Gutschein „Neustart: zurück zum Anfang“.
 - Nach 30:00 läuft die Zeit rot weiter. Der Gutschein kommt immer.
 
 ## Als App aufs Handy
@@ -80,4 +86,4 @@ Auf der Startseite zeigt „Als App aufs Handy holen“ die Schritte für iPhone
 ## Vor dem Weitergeben
 
 Wenn du selbst testest, wird dein Spielstand in deinem Browser gespeichert. Konrads Handy startet frisch.
-Zum Zurücksetzen auf deinem Gerät: Menü (oben rechts) → „Neustart: zurück zum Anfang“ → „Neu starten“. Auf der Gutschein-Seite steht dieselbe Schaltfläche ganz unten.
+Zum Zurücksetzen auf deinem Gerät: Menü (oben rechts) → „Neustart: zurück zum Anfang“ → „Neu starten“. Auf der Gutschein-Seite steht dieselbe Schaltfläche direkt unter dem Gutschein.

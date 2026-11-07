@@ -391,9 +391,10 @@ const STORE_KEY = 'eruev-konrad-v1';
 let instanceRunning = true;
 const MINUTE = 60000;
 const DURATION = 30 * MINUTE;
-const HALFTIME = 15 * MINUTE;
+const SPEEDRUN_LIMIT = 10 * MINUTE;
+const CHEST_RUSH_MS = 60000;
 const HINT_COST = 2 * MINUTE;
-const WRONG_BOX_COST = 3 * MINUTE;
+const WRONG_BOX_COST = 10 * MINUTE;
 const WRONG_ALTAR_COST = 1 * MINUTE;
 const SKIPPER_LIMIT_MS = 12000;
 const BRIDGE_LIMIT = 30;
@@ -527,7 +528,7 @@ const ACHIEVEMENTS = {
   puls:     ['Kammerflimmern', 'Puls über 140.'],
   wasser:   ['Igitt', 'Im Salon zum stillen Wasser gegriffen.'],
   funk:     ['Funkstille', 'Ohne einen einzigen Tipp durchgekommen.'],
-  speed:    ['Speedrun', 'Unter 20 Minuten Prüfzeit.'],
+  speed:    ['Speedrun', 'Unter 10 Minuten Prüfzeit.'],
   overtime: ['Nachspielzeit', 'Die 30 Minuten gerissen und trotzdem rausgekommen.'],
 };
 
@@ -791,7 +792,7 @@ function resumeClock() {
 document.addEventListener('visibilitychange', () => {
   if (!instanceRunning) return;
   if (document.hidden) { pauseClock(); if (Sound.ctx) Sound.ctx.suspend(); }
-  else { resumeClock(); lastAct = Date.now(); if (Sound.ctx) Sound.ctx.resume(); }
+  else { resumeClock(); if (Sound.ctx) Sound.ctx.resume(); }
 });
 addEventListener('pagehide', () => { if (instanceRunning) pauseClock(); });
 function pulseNow() {
@@ -1642,7 +1643,7 @@ function viewFinale() {
   const v = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(VOUCHER), c => c.charCodeAt(0))));
   const ms = elapsed(), hints = hintsUsed();
   const achs = Object.keys(ACHIEVEMENTS).map(id =>
-    '<div class="ach' + (S.ach[id] ? '' : ' off') + '"><i>' + (S.ach[id] ? '✓' : '·') + '</i><span><b>' + esc(ACHIEVEMENTS[id][0]) + '</b>: ' + esc(ACHIEVEMENTS[id][1]) + '</span></div>').join('');
+    '<div class="ach' + (S.ach[id] ? '' : ' off') + '"><i>' + (S.ach[id] ? '✓' : '·') + '</i><span><b>' + esc(ACHIEVEMENTS[id][0]) + '</b>: ' + (S.ach[id] ? esc(ACHIEVEMENTS[id][1]) : '???') + '</span></div>').join('');
   return '<canvas id="fog"></canvas><div class="wrap finale">' +
     '<h1>Raum 46 ist offen</h1>' +
     '<div class="voucher">' +
@@ -1651,6 +1652,7 @@ function viewFinale() {
       '<div class="perf"></div><div class="for">' + esc(v.for) + '</div><p>' + esc(v.note) + '</p><div class="from">' + esc(v.from) + '</div>' +
       '<a class="btn primary" href="' + esc(v.url) + '" target="_blank" rel="noopener">Zum Escape Room</a>' +
     '</div>' +
+    '<div class="row center"><button class="btn" data-act="resetAsk">Neustart: zurück zum Anfang</button></div>' +
     '<div class="protocol">' + plaque() +
       '<div class="agency">ERÜV · Prüfprotokoll</div><h2>Prüfling Konrad</h2>' +
       '<dl class="form-rows">' +
@@ -1658,8 +1660,7 @@ function viewFinale() {
         '<dt>Funk-Tipps</dt><dd>' + hints + '</dd><dt>Fehlversuche</dt><dd>' + S.wrong + '</dd><dt>Höchster Puls</dt><dd>' + S.maxPulse + ' BPM</dd>' +
       '</dl>' +
       '<p class="verdict">' + esc(verdict(ms, hints)) + '</p><div class="achs">' + achs + '</div>' +
-    '</div>' +
-    '<div class="row center"><button class="btn ghost" data-act="resetAsk">Neustart: zurück zum Anfang</button></div></div>';
+    '</div></div>';
 }
 
 /* ================= fencing ================= */
@@ -1706,7 +1707,7 @@ function animateCrossing(onDone) {
 
 /* ================= actions ================= */
 let lastGrumble = '';
-let lastAct = Date.now(), tapTimes = [], lastViolenceNote = 0, idleCount = 0;
+let tapTimes = [], lastViolenceNote = 0, salonArrivedAt = 0;
 const actions = {
   start() {
     Sound.init();
@@ -1734,11 +1735,12 @@ const actions = {
     }
     S.loc = loc.id; Sound.click();
     window.scrollTo(0, 0);
+    setTimeout(() => Backdrop.eyes(), 1500);
     if (!S.seen[loc.id]) {
       S.seen[loc.id] = true;
       if (loc.id === 'bruecke') afterRender.push(() => setTimeout(() => bubble('Na? Auch hier, um über meine Brücke zu latschen?'), 500));
       if (loc.id === 'forsthaus') { once.add('ghost'); setTimeout(() => Sound.creak(), 1700); setTimeout(() => Voice.say('konrad'), 2100); setTimeout(() => radio('Hast du das auch gesehen? Im Fenster? … Nein? Gut.'), 4600); setTimeout(() => radio('Komisch. Der Förster trägt dieselben Schuhe wie Marcel. Und wo ist Marcel eigentlich hin?'), 9000); }
-      if (loc.id === 'salon') setTimeout(() => radio('Das Porträt ist von H. S. S. Er schaut immer so. Glauben wir.'), 900);
+      if (loc.id === 'salon') { salonArrivedAt = Date.now(); setTimeout(() => Fx.blackout(), 700); setTimeout(() => radio('Das Porträt ist von H. S. S. Er schaut immer so. Glauben wir.'), 7500); }
       if (loc.id === 'altar') { Sound.rumble(); setTimeout(() => radio('Raum 46. Wir kennen da jemanden, der sich darüber freut.'), 900); setTimeout(() => radio(COLOR_JOKES.altar), 5200); }
     }
   },
@@ -1755,6 +1757,7 @@ const actions = {
     give(id); Sound.click(); buzz(30);
     toast(item.text, 'ok');
     if (id === 'amulett') setTimeout(() => Sound.creak(), 500);
+    if (id === 'hering') setTimeout(() => radio('Hinter dir! Ein dreiköpfiger Affe! … Nein? Na gut. Weiter.'), 1200);
     if (el.dataset.loc) { closeSheet(); actions.go(el); }
   },
   gateWheel(el) { spin(S.lock, el); },
@@ -1764,6 +1767,9 @@ const actions = {
       S.gate = true; stress(-12); once.add('gate');
       Sound.clunk(); setTimeout(() => Sound.creak(), 500); setTimeout(() => Sound.ok(), 1500); buzz(80);
       toast('Das Schloss fällt, das Tor knarrt auf. Dahinter führt ein Pfad zur Schlucht.', 'ok');
+      setTimeout(() => { Backdrop.runner(); Sound.steps(); }, 2500);
+      setTimeout(() => Voice.say('hierDrueben'), 3400);
+      setTimeout(() => radio('Hast du das gesehen? Zwischen den Bäumen? … Wir auch nicht.'), 4200);
       window.scrollTo(0, 0);
     } else {
       const unheard = QUIPS.filter(q => !S.funkLog.includes(q));
@@ -1885,11 +1891,19 @@ const actions = {
     }
   },
   jugReset() { S.jugs = [8, 0, 0]; S.jugSel = -1; S.jugMoves = 0; Sound.pour(); },
-  chest(el) { if (!S.boxDone) { S.boxSel = el.dataset.id; Sound.tone(260, 0.08, 'triangle', 0.1); } },
+  chest(el) {
+    if (S.boxDone) return;
+    if (!S.seen.chestRush && salonArrivedAt && Date.now() - salonArrivedAt < CHEST_RUSH_MS) {
+      S.seen.chestRush = true;
+      Fx.lunge();
+      setTimeout(() => radio('Zu schnell, Konrad. Wenn du nochmal rätst, wird das Spiel zurückgesetzt.', 'bad'), 1800);
+    }
+    S.boxSel = el.dataset.id; Sound.tone(260, 0.08, 'triangle', 0.1);
+  },
   boxAsk() {
     const box = BOXES.find(b => b.id === S.boxSel);
     if (!box) return;
-    openSheet('<h2>' + esc(box.name) + ' öffnen?</h2><p>Nur eine Kiste ist die richtige. Eine falsche kostet 3 Minuten.</p>' +
+    openSheet('<h2>' + esc(box.name) + ' öffnen?</h2><p>Nur eine Kiste ist die richtige. Eine falsche kostet 10 Minuten.</p>' +
       '<div class="row"><button class="btn primary" data-act="boxOpen" data-id="' + box.id + '">Öffnen</button><button class="btn ghost" data-act="close">Doch nicht</button></div>');
   },
   boxOpen(el) {
@@ -1904,7 +1918,7 @@ const actions = {
     } else {
       S.opened.push(id); S.penalty += WRONG_BOX_COST; S.boxSel = '';
       afterRender.push(() => setTimeout(() => Fx.bats(document.getElementById('chest-' + id)), 350));
-      failure('Leer. Bis auf das, was rausgeflogen ist. Drei Minuten weg. Hast du bei der Einweisung zugehört?', 14);
+      failure('Leer. Bis auf das, was rausgeflogen ist. Zehn Minuten weg. Hast du bei der Einweisung zugehört?', 14);
     }
   },
   slot(el) {
@@ -2061,7 +2075,7 @@ function closeSheet() { const s = document.getElementById('sheet'); if (s) s.rem
 function finishAchievements() {
   const ms = elapsed(), now = Date.now();
   if (hintsUsed() === 0) S.ach.funk = now;
-  if (ms < 20 * MINUTE) S.ach.speed = now;
+  if (ms < SPEEDRUN_LIMIT) S.ach.speed = now;
   if (ms > DURATION) S.ach.overtime = now;
 }
 
@@ -2080,7 +2094,6 @@ document.addEventListener('click', e => {
     if (S.screen !== 'intro') Ambience.start();
   }
   const now = Date.now();
-  lastAct = now;
   if (!TAP_HEAVY.includes(act)) {
     tapTimes = tapTimes.filter(t => now - t < 2000); tapTimes.push(now);
     if (tapTimes.length > 10 && now - lastViolenceNote > 30000 && S.screen === 'game') { lastViolenceNote = now; radio('Keine Gewalt anwenden! Steht in Regel 2.'); }
@@ -2091,7 +2104,7 @@ document.addEventListener('click', e => {
 });
 
 /* ================= ticker ================= */
-let lastIdle = 0, lastStressDecay = Date.now(), lastSave = 0, nextEyes = Date.now() + 40000;
+let lastStressDecay = Date.now(), lastSave = 0;
 function tick() {
   const timer = document.getElementById('timer');
   const uvCount = document.getElementById('uvCount');
@@ -2119,13 +2132,6 @@ const ticker = setInterval(() => {
   if (p > S.maxPulse) S.maxPulse = p;
   if (p >= PULSE_ACHIEVEMENT) unlock('puls');
   tick();
-  if (now > nextEyes) { nextEyes = now + 45000 + Math.random() * 50000; Backdrop.eyes(); }
-  if (!sheetOpen && !blackoutRunning && now - lastAct > 75000 && now - lastIdle > 150000) {
-    lastIdle = now; idleCount++;
-    if (idleCount % 2) { Backdrop.runner(); Sound.steps(); setTimeout(() => Voice.say('hierDrueben'), 900); setTimeout(() => radio('Hast du das gesehen? Zwischen den Bäumen? … Wir auch nicht.'), 1600); }
-    else radio('Hinter dir! Ein dreiköpfiger Affe! … Nein? Na gut. Weiter.');
-  }
-  if (!S.seen.half && elapsed() >= HALFTIME && !sheetOpen && !crossAnim) { S.seen.half = true; save(); Fx.blackout(); }
   if (!S.seen.over && DURATION - elapsed() < 0) { S.seen.over = true; Sound.thunder(); Fx.flash(); radio('Die 30 Minuten sind um. Wir machen weiter. Rausgelassen wirst du trotzdem.', 'bad'); }
   if (now - lastSave > 5000) { lastSave = now; save(); }
 }, 250);
