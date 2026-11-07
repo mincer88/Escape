@@ -50,7 +50,7 @@ UV-Lampe am Tor aufheben und im Inventar einschalten. Sie geht nach 10 Sekunden 
 | Glas auf dem Salon-Kamin antippen | „IGITT! Das ist ja STILLES Wasser!“, Achievement „Igitt“, danach ein Funkspruch zum fehlenden Sprudel |
 | Laterne erlischt auf der Brücke (über 30 Min.) | Bildschirm schwarz, ein Gesicht springt heran, Schrei |
 | Falsche Kiste im Salon | Fledermäuse schießen heraus |
-| Erstes Schwarzlicht | Blutige Handabdrücke am Bildschirmrand |
+| Erstes Schwarzlicht | Blutige Handabdrücke am Bildschirmrand, „Oh, Schwarzlicht“; beim ersten Ausgehen die Akku-Meldung, beim zweiten Einschalten der Farbwitz |
 | Nach 15 Minuten Prüfzeit | Stromausfall, Herzschlag, deine Aufnahme „Konrad“ |
 | Lange nichts getippt | Etwas huscht zwischen den Bäumen vorbei, dazu deine Aufnahme „Psssst … hier drüben“; beim nächsten Mal der dreiköpfige Affe |
 | Funk-Sprüche zur Rot-Grün-Schwäche | z. B. „Die roten Ziffern, Konrad. Die ROTEN. Also auf keinen Fall die grünen.“ Kein Rätsel hängt von Rot oder Grün ab. |
@@ -67,7 +67,7 @@ Am Ende führt die Schaltfläche „Zum Escape Room“ auf https://www.escape-st
 
 ## Strafen und Tipps
 
-- Alle Meldungen (Funksprüche, Achievements, Hinweise) bleiben stehen, bis Konrad „Gelesen“ tippt; höchstens drei auf einmal, die älteste weicht. Die Funksprüche kommen von „Oli“, jeder nur einmal. Menü → „Funkprotokoll“ zeigt alle bisher gehörten Sprüche (keine Tipps).
+- Alle Meldungen (Funksprüche, Achievements, Hinweise) bleiben stehen, bis Konrad „Gelesen“ tippt. Es steht immer nur eine da; weitere warten dahinter („Gelesen · noch 2“). Die Funksprüche kommen von „Oli“, jeder nur einmal. Menü → „Funkprotokoll“ zeigt alle bisher gehörten Sprüche (keine Tipps).
 - Funk-Tipp: 2 Minuten Abzug, 3 Stufen pro Station (Salon 4). Die letzte Stufe verrät die Lösung.
 - Falsche Kiste im Salon: 3 Minuten. Falscher Altar: 1 Minute.
 - Nach 30:00 läuft die Zeit rot weiter. Der Gutschein kommt immer.

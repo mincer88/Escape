@@ -797,16 +797,29 @@ function hintsUsed() { return Object.values(S.hints).reduce((a, b) => a + b, 0) 
 /* ================= feedback ================= */
 const toastBox = document.getElementById('toasts');
 const fxLayer = document.getElementById('fx');
-/** Shows a message that stays on screen until Konrad taps "Gelesen"; at most three at once, the oldest gives way. */
+// Messages come one at a time: the next one appears only after Konrad taps "Gelesen" on the current one.
+const toastQueue = [];
+/** Queues a message; the same text is never shown or queued twice at once. */
 function toast(text, kind = '', who = GAME_MASTER) {
-  if ([...toastBox.children].some(t => t.dataset.text === text)) return;
+  if ([...toastBox.children].some(t => t.dataset.text === text) || toastQueue.some(q => q.text === text)) return;
+  toastQueue.push({ text, kind, who });
+  if (toastBox.children.length) updateWaitingCount(); else showNextToast();
+}
+function showNextToast() {
+  const next = toastQueue.shift();
+  if (!next) return;
   const el = document.createElement('div');
-  el.dataset.text = text;
-  el.className = 'toast ' + kind;
-  el.innerHTML = (who ? '<b>' + esc(who) + '</b>' : '') + esc(text) + '<button class="toast-ok" type="button">Gelesen</button>';
-  el.querySelector('.toast-ok').addEventListener('click', () => el.remove());
+  el.dataset.text = next.text;
+  el.className = 'toast ' + next.kind;
+  el.innerHTML = (next.who ? '<b>' + esc(next.who) + '</b>' : '') + esc(next.text) + '<button class="toast-ok" type="button">Gelesen</button>';
+  el.querySelector('.toast-ok').addEventListener('click', () => { el.remove(); showNextToast(); });
   toastBox.appendChild(el);
-  while (toastBox.children.length > 3) toastBox.firstChild.remove();
+  updateWaitingCount();
+}
+/** Tells Konrad on the button how many messages still wait behind the current one. */
+function updateWaitingCount() {
+  const button = toastBox.querySelector('.toast-ok');
+  if (button) button.textContent = toastQueue.length ? 'Gelesen · noch ' + toastQueue.length : 'Gelesen';
 }
 /** Records a radio line for the Funkprotokoll in the menu; only lines Konrad has already heard end up there. */
 function logFunk(text) { if (!S.funkLog.includes(text)) S.funkLog.push(text); }
@@ -1926,7 +1939,7 @@ const actions = {
   reset() {
     const sound = S.sound;
     S = freshState(); S.sound = sound; closeSheet();
-    toastBox.innerHTML = ''; fxLayer.innerHTML = '';
+    toastBox.innerHTML = ''; toastQueue.length = 0; fxLayer.innerHTML = '';
     clearTimeout(uvTimer); trollCheers = false; crossAnim = null;
     try { localStorage.removeItem(STORE_KEY); } catch (e) { /* nothing stored */ }
     window.scrollTo(0, 0);
@@ -1965,7 +1978,8 @@ function useItem(id) {
     S.uv = !S.uv; Sound.tone(S.uv ? 300 : 200, 0.15, 'sawtooth', 0.06);
     clearTimeout(uvTimer);
     if (S.uv) { uvEndsAt = Date.now() + UV_ON_MS; uvTimer = setTimeout(uvOff, UV_ON_MS); }
-    if (S.uv && !S.seen.uv) { S.seen.uv = true; setTimeout(() => Fx.handprints(), 250); setTimeout(() => radio('Oh, Schwarzlicht. Profis lieben Schwarzlicht.'), 1800); setTimeout(() => radio(COLOR_JOKES.uv), 5200); }
+    if (S.uv && !S.seen.uv) { S.seen.uv = true; setTimeout(() => Fx.handprints(), 250); setTimeout(() => radio('Oh, Schwarzlicht. Profis lieben Schwarzlicht.'), 1800); }
+    else if (S.uv) setTimeout(() => radio(COLOR_JOKES.uv), 1500);
     return;
   }
   if (id === 'laterne') {
