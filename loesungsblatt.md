@@ -37,7 +37,7 @@ Fechten im Forsthaus: Der Förster nimmt zufällig Beleidigungen aus dieser List
 
 ## Roter Hering
 
-UV-Lampe am Tor aufheben und im Inventar einschalten. Sie geht nach 10 Sekunden von selbst wieder aus. Solange sie an ist, leuchten rote Ziffern: I·1 (Tor), II·9 (Brücke), III·9 (Forsthaus), IV·0 (Salon). Code **1990** (Erscheinungsjahr von „The Secret of Monkey Island“) öffnet die Kiste „NICHT ÖFFNEN“. Darin liegt ein eingelegter roter Hering („Hering nehmen“). Er ist nutzlos. Der Funk-Tipp an der gelösten Brücke deutet an, dass der Troll Hunger auf etwas Rotes, Eingelegtes hat. Bietet Konrad ihm den Hering an, gibt es das Achievement „Falsches Spiel, Kumpel“.
+UV-Lampe am Tor aufheben und im Inventar einschalten. Sie geht nach 10 Sekunden von selbst wieder aus; die Sekunden zählen auf ihrem Symbol im Inventar herunter. Beim ersten Ausgehen erklärt eine Meldung den Akku, danach nicht mehr. Solange sie an ist, leuchten rote Ziffern: I·1 (Tor), II·9 (Brücke), III·9 (Forsthaus), IV·0 (Salon). Code **1990** (Erscheinungsjahr von „The Secret of Monkey Island“) öffnet die Kiste „NICHT ÖFFNEN“. Darin liegt ein eingelegter roter Hering („Hering nehmen“). Er ist nutzlos. Der Funk-Tipp an der gelösten Brücke deutet an, dass der Troll Hunger auf etwas Rotes, Eingelegtes hat. Bietet Konrad ihm den Hering an, gibt es das Achievement „Falsches Spiel, Kumpel“.
 
 ## Insider und Schreckmomente
 

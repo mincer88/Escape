@@ -266,7 +266,8 @@ body.uv::after { content: ""; position: fixed; inset: 0; pointer-events: none; z
 .inv .label { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); flex: none; }
 .item { flex: none; min-width: 74px; min-height: 58px; border-radius: 10px; border: 1px solid var(--line); background: var(--moss); cursor: pointer; display: grid; justify-items: center; align-content: center; gap: 2px; padding: 4px 8px; font-size: .75rem; font-weight: 700; }
 .item svg { width: 24px; height: 24px; stroke: var(--lantern); fill: none; stroke-width: 1.8; }
-.item.active { border-color: var(--uv); box-shadow: 0 0 14px var(--uv); }
+.item.active { border-color: var(--uv); box-shadow: 0 0 14px var(--uv); position: relative; }
+.uv-count { position: absolute; top: 3px; right: 3px; min-width: 20px; height: 20px; padding: 0 4px; border-radius: 10px; background: var(--uv); color: #fff; font-family: var(--f-mono); font-size: .75rem; display: grid; place-items: center; }
 .item.new { animation: glow 1.6s 2; }
 @keyframes glow { 50% { box-shadow: 0 0 22px var(--lantern); border-color: var(--lantern); } }
 .inv .empty { color: var(--muted); font-size: .85rem; }
@@ -1441,7 +1442,8 @@ function viewInventory() {
   const items = S.inv.map(id => {
     const it = ITEMS[id];
     return '<button class="item' + (id === 'uv' && S.uv ? ' active' : '') + (id === S.newItem ? ' new' : '') + '" data-act="item" data-id="' + id + '">' +
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + it.icon + '"/></svg>' + esc(it.name) + '</button>';
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + it.icon + '"/></svg>' + esc(it.name) +
+      (id === 'uv' && S.uv ? '<span class="uv-count" id="uvCount">' + uvSecondsLeft() + '</span>' : '') + '</button>';
   }).join('');
   return '<footer class="inv"><div class="wrap"><span class="label">Inventar</span>' + (items || '<span class="empty">Noch leer. Augen auf.</span>') + '</div></footer>';
 }
@@ -1942,22 +1944,27 @@ function openItem(id) {
     '<div class="row">' + (id === 'schablone' ? '' : '<button class="btn primary" data-act="use" data-id="' + id + '">' + useLabel + '</button>') +
     '<button class="btn ghost" data-act="close">Schließen</button></div>');
 }
-let uvTimer = 0;
+let uvTimer = 0, uvEndsAt = 0;
+/** Seconds the UV lamp still burns, shown as a countdown on its inventory button. */
+function uvSecondsLeft() { return Math.max(1, Math.ceil((uvEndsAt - Date.now()) / 1000)); }
 /** Switches the UV lamp off without a re-render, so a running bridge animation or open choice is not interrupted. */
 function uvOff() {
   if (!S.uv) return;
-  S.uv = false; save();
+  S.uv = false;
   document.body.classList.remove('uv');
   const button = document.querySelector('.item[data-id="uv"]');
   if (button) button.classList.remove('active');
+  const count = document.getElementById('uvCount');
+  if (count) count.remove();
   Sound.tone(200, 0.15, 'sawtooth', 0.06);
-  toast('UV-Lampe aus. Der Akku braucht eine Pause.');
+  if (!S.seen.uvAkku) { S.seen.uvAkku = true; toast('UV-Lampe aus. Der Akku hält immer nur 10 Sekunden.'); }
+  save();
 }
 function useItem(id) {
   if (id === 'uv') {
     S.uv = !S.uv; Sound.tone(S.uv ? 300 : 200, 0.15, 'sawtooth', 0.06);
     clearTimeout(uvTimer);
-    if (S.uv) uvTimer = setTimeout(uvOff, UV_ON_MS);
+    if (S.uv) { uvEndsAt = Date.now() + UV_ON_MS; uvTimer = setTimeout(uvOff, UV_ON_MS); }
     if (S.uv && !S.seen.uv) { S.seen.uv = true; setTimeout(() => Fx.handprints(), 250); setTimeout(() => radio('Oh, Schwarzlicht. Profis lieben Schwarzlicht.'), 1800); setTimeout(() => radio(COLOR_JOKES.uv), 5200); }
     return;
   }
@@ -2046,6 +2053,8 @@ document.addEventListener('click', e => {
 let lastIdle = 0, lastStressDecay = Date.now(), lastSave = 0, nextEyes = Date.now() + 40000;
 function tick() {
   const timer = document.getElementById('timer');
+  const uvCount = document.getElementById('uvCount');
+  if (uvCount) uvCount.textContent = uvSecondsLeft();
   const p = pulseNow();
   const vig = document.getElementById('vig');
   const inGame = S.screen === 'game' && S.startedAt;
