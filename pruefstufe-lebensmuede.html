@@ -397,6 +397,8 @@ const CHEST_RUSH_MS = 60000;
 const HINT_COST = 2 * MINUTE;
 const WRONG_BOX_COST = 10 * MINUTE;
 const WRONG_ALTAR_COST = 1 * MINUTE;
+const BRUTE_FORCE_POURS = 10;
+const BRUTE_FORCE_COST = 5 * MINUTE;
 const SKIPPER_LIMIT_MS = 12000;
 const BRIDGE_LIMIT = 30;
 const WALK_MS_PER_MINUTE = 260;
@@ -627,7 +629,7 @@ function freshState() {
     hlock: [0, 0, 0, 0], herring: false,
     lit: false, bridge: freshBridge(), bridgeDone: false,
     fence: null, fenceDone: false, fenceAnswers: [],
-    kanUsed: false, jugs: [8, 0, 0], jugSel: -1, jugMoves: 0, jugsDone: false,
+    kanUsed: false, jugs: [8, 0, 0], jugSel: -1, jugMoves: 0, jugPours: 0, jugsDone: false,
     boxSel: '', opened: [], boxDone: false,
     altar: { items: [null, null, null, null], runes: [null, null, null, null] }, altarDone: false,
     hints: {}, wrong: 0, stress: 0, maxPulse: 72, ach: {},
@@ -1922,12 +1924,16 @@ const actions = {
     const from = S.jugSel, amount = Math.min(S.jugs[from], JUG_CAPS[i] - S.jugs[i]);
     S.jugSel = -1;
     if (amount === 0) { toast('Schon voll.'); return; }
-    S.jugs[from] -= amount; S.jugs[i] += amount; S.jugMoves++; Sound.pour();
+    S.jugs[from] -= amount; S.jugs[i] += amount; S.jugMoves++; S.jugPours++; Sound.pour();
     if (S.jugs[0] === 4) {
       S.jugsDone = true; stress(-15);
       setTimeout(() => { Sound.clunk(); Sound.tone(60, 1.5, 'sawtooth', 0.12); Sound.ok(); Fx.flash(); }, 400);
       toast('Genau 4 Liter im Kanister. Ab in den Generator. Er springt an.', 'ok');
       setTimeout(() => radio(COLOR_JOKES.generator), 2600);
+    } else if (S.jugPours % BRUTE_FORCE_POURS === 0) {
+      // Counts every pour since the puzzle began, so "Alles zurück" does not dodge the penalty.
+      S.penalty += BRUTE_FORCE_COST;
+      failure('Bruteforcen ist lame!! −5 Minuten.', 8); afterRender.push(() => shake('#jugCard'));
     }
   },
   jugReset() { S.jugs = [8, 0, 0]; S.jugSel = -1; S.jugMoves = 0; Sound.pour(); },
