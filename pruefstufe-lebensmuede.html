@@ -807,7 +807,7 @@ function toast(text, kind = '', who = GAME_MASTER) {
 }
 function showNextToast() {
   const next = toastQueue.shift();
-  if (!next) return;
+  if (!next) { showPendingBubble(); return; }
   const el = document.createElement('div');
   el.dataset.text = next.text;
   el.className = 'toast ' + next.kind;
@@ -854,7 +854,16 @@ const TAKE = {
   amulett:   { text: 'Amulett genommen. Der Stein ist warm. Hinter dem Forsthaus knarrt eine Tür: Raum 46.' },
 };
 function takeButton(id, label) { return has(id) ? '' : '<div class="row"><button class="btn primary" data-act="take" data-id="' + id + '">' + label + '</button></div>'; }
+// A speech bubble waits while a message is on screen, otherwise the message would hide it.
+let pendingBubble = null;
+/** Shows the waiting speech bubble once the last message is read, if Konrad is still in the same place. */
+function showPendingBubble() {
+  const waiting = pendingBubble;
+  pendingBubble = null;
+  if (waiting && waiting.loc === S.loc && S.screen === 'game') bubble(waiting.text);
+}
 function bubble(text) {
+  if (toastBox.children.length) { pendingBubble = { text, loc: S.loc }; return; }
   const stage = document.querySelector('.stage');
   if (!stage) return;
   stage.querySelectorAll('.bubble').forEach(b => b.remove());
@@ -1939,7 +1948,7 @@ const actions = {
   reset() {
     const sound = S.sound;
     S = freshState(); S.sound = sound; closeSheet();
-    toastBox.innerHTML = ''; toastQueue.length = 0; fxLayer.innerHTML = '';
+    toastBox.innerHTML = ''; toastQueue.length = 0; pendingBubble = null; fxLayer.innerHTML = '';
     clearTimeout(uvTimer); trollCheers = false; crossAnim = null;
     try { localStorage.removeItem(STORE_KEY); } catch (e) { /* nothing stored */ }
     window.scrollTo(0, 0);
