@@ -467,6 +467,18 @@ const LAME = ['Ach ja?', 'Das sag ich dem Spielleiter!', 'Hinter dir, ein dreik�
 const AFFE = LAME[2];
 const FORESTER_HIT = ['Autsch.', 'Grmpf. Treffer.', 'Das … war gut. Leider.'];
 const FORESTER_WIN = ['Ha! Das passt ja wohl gar nicht.', 'Nicht mal knapp daneben. Weit daneben.', 'Das war eine Antwort. Nur nicht auf meine Frage.'];
+// The forester is Marcel in costume: he hates costumes and carnival and would rather be in Africa or at his computer.
+const FORESTER_GRUMBLES = [
+  'Dieser Bart juckt. Wer hat sich das ausgedacht?',
+  'Ich hasse Kostüme. Ich hasse Karneval. Ich hasse diesen Hut.',
+  'Ich könnte jetzt in Afrika sein. Sonne, Savanne, keine Verkleidung.',
+  'Zu Hause wartet mein Rechner mit einem halbfertigen Nerd-Projekt. Und ich? Spiele Förster.',
+  'Helau? Alaaf? Nein. Einfach nein.',
+  'Nach dem hier buche ich Afrika. Ohne Kostüm.',
+  'Lieber würde ich drei Tage Kabel sortieren als noch eine Minute in diesem Kostüm stecken.',
+  'Das ist schlimmer als Karneval. Und Karneval ist schon das Schlimmste.',
+  'Wenn mich hier einer fotografiert, lösche ich sein Handy. Remote.',
+];
 const TROLL_LINES = [
   'Zoll? Nö. Ich bin nur Deko.',
   'Ich werde hier fürs Rumsitzen bezahlt. Gut bezahlt.',
@@ -1290,13 +1302,13 @@ function artForsthaus() {
       '<g class="' + (lit ? 'gen-run' : '') + '"><rect x="236" y="156" width="54" height="36" rx="3" fill="#6b6f3a" stroke="#3a3d1f"/><path d="M242 164 H284 M242 170 H284 M242 176 H284" stroke="#3a3d1f"/><rect x="284" y="146" width="5" height="12" fill="#3a3d1f"/>' +
       '<circle cx="250" cy="185" r="3" fill="' + (lit ? '#5fcb8f' : '#3a0f0f') + '"/></g>' +
       (lit ? '<circle class="puff" cx="287" cy="142" r="4" fill="#4c524e"/><circle class="puff b" cx="287" cy="142" r="4" fill="#4c524e"/>' : '') + '</g>' +
-    '<g class="foerster ' + fState + '" transform="' + fPos + '">' +
+    '<g class="foerster hot ' + fState + '" transform="' + fPos + '" data-act="foerster" role="button" aria-label="Förster">' +
       '<g class="f-body">' +
         '<rect x="-11" y="-8" width="9" height="8" fill="#2a1d14"/><rect x="2" y="-8" width="9" height="8" fill="#2a1d14"/>' +
         '<rect x="-9" y="-31" width="18" height="24" fill="#4a3a2a"/>' +
         '<path d="M-17 -30 L-14 -63 Q0 -71 14 -63 L17 -30 Z" fill="#3f5a35"/><rect x="-16" y="-37" width="32" height="4.5" fill="#2a1d14"/><rect x="-3" y="-38" width="6" height="6.5" fill="#c9a24a"/>' +
         '<circle cx="0" cy="-75" r="10.5" fill="#e2c4a0"/>' +
-        '<path d="M-11 -73 Q-13 -53 0 -48 Q13 -53 11 -73 Q0 -66 -11 -73Z" fill="#d8d2c6"/>' +
+        (S.fenceDone ? '' : '<path d="M-11 -73 Q-13 -53 0 -48 Q13 -53 11 -73 Q0 -66 -11 -73Z" fill="#d8d2c6"/>') +
         '<circle cx="0" cy="-73" r="2.6" fill="#c9604a"/><circle cx="-4" cy="-78" r="1.3" fill="#1b1a12"/><circle cx="4" cy="-78" r="1.3" fill="#1b1a12"/>' +
         '<path d="M-7 -82 L-2 -80 M7 -82 L2 -80" stroke="#6b5a4a" stroke-width="1.6" stroke-linecap="round"/>' +
         '<ellipse cx="0" cy="-85" rx="15" ry="3.6" fill="#2f4029"/><path d="M-9.5 -85 Q-8.5 -97 0 -97 Q8.5 -97 9.5 -85Z" fill="#3a4d31"/><rect x="-9" y="-89" width="18" height="2.6" fill="#8a5a2a"/><path d="M7 -89 Q14 -100 18 -106" stroke="#c9b06a" stroke-width="2" fill="none"/>' +
@@ -1693,6 +1705,7 @@ function animateCrossing(onDone) {
 }
 
 /* ================= actions ================= */
+let lastGrumble = '';
 let lastAct = Date.now(), tapTimes = [], lastViolenceNote = 0, idleCount = 0;
 const actions = {
   start() {
@@ -1776,6 +1789,12 @@ const actions = {
     Sound.tone(180, 0.3, 'square', 0.08, 0, 90); buzz([40, 30, 40]);
     afterRender.push(() => bubble('IGITT! Das ist ja STILLES Wasser!'));
     if (!S.ach.wasser) { unlock('wasser'); setTimeout(() => radio('Sorry, Konrad. Der Sprudel war aus. Wir sind ja keine Unmenschen.'), 2600); }
+  },
+  foerster() {
+    Sound.tone(140, 0.3, 'sawtooth', 0.08, 0, 100);
+    const options = FORESTER_GRUMBLES.filter(line => line !== lastGrumble);
+    lastGrumble = pick(options);
+    bubble(lastGrumble);
   },
   troll() {
     if (!S.lit) { Sound.tone(70, 0.6, 'sawtooth', 0.12, 0, 50); bubble('Mach erst mal Licht. Ich seh dich trotzdem.'); return; }
@@ -2047,8 +2066,8 @@ function finishAchievements() {
 }
 
 /* ================= event wiring ================= */
-const SHEET_ACTIONS = ['funk', 'menu', 'funkArchive', 'installApp','item','boxAsk', 'rules', 'resetAsk', 'hint', 'fenceAnswer', 'sound', 'troll'];
-const TAP_HEAVY = ['gateWheel', 'herringWheel', 'slot', 'jug', 'person', 'cross', 'chest', 'troll'];
+const SHEET_ACTIONS = ['funk', 'menu', 'funkArchive', 'installApp','item','boxAsk', 'rules', 'resetAsk', 'hint', 'fenceAnswer', 'sound', 'troll', 'foerster'];
+const TAP_HEAVY = ['gateWheel', 'herringWheel', 'slot', 'jug', 'person', 'cross', 'chest', 'troll', 'foerster'];
 document.addEventListener('click', e => {
   if (!instanceRunning) return;
   const el = e.target.closest('[data-act]');

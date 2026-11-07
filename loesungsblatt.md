@@ -46,7 +46,8 @@ UV-Lampe am Tor aufheben und im Inventar einschalten. Sie geht nach 10 Sekunden 
 | Brücke verlassen (nach dem Lösen) | Der Troll hebt einen Bierkrug mit Schaumkrone und ruft „Eine Sache noch, Konrad … BIERJUNGE!“. Einzige Antwort: „Hängt!“. Dann gibt er Konrad den Kanister und behält den Krug. |
 | Konrads 3. Gang über die Brücke | Er knickt um: Blaulicht, Martinshorn, ein Notarztwagen fährt vor. Sanitäter: Röntgen, Schiene, ab jetzt humpelt Konrad (2 statt 1 Minute). Jede Lösung in 30 Minuten schickt Konrad fünfmal über die Brücke, die Szene kommt also immer. |
 | Erster Besuch Forsthaus | Kurz steht jemand im Fenster, Knarzen, deine Aufnahme „Konrad“; später der Funkspruch, dass der Förster Marcels Schuhe trägt |
-| Fechten gewonnen | Der Förster reißt sich den Bart ab: Es ist Marcel, der Verkleidungen und Karneval hasst |
+| Förster antippen | Er meckert über Kostüme und Karneval, will lieber in Afrika sein oder an seinem Nerd-Projekt sitzen (9 Sprüche, nie zweimal hintereinander derselbe) |
+| Fechten gewonnen | Der Förster reißt sich den Bart ab: Es ist Marcel, der Verkleidungen und Karneval hasst. Danach steht er ohne Bart da. |
 | Glas auf dem Salon-Kamin antippen | „IGITT! Das ist ja STILLES Wasser!“, Achievement „Igitt“, danach ein Funkspruch zum fehlenden Sprudel |
 | Laterne erlischt auf der Brücke (über 30 Min.) | Bildschirm schwarz, ein Gesicht springt heran, Schrei |
 | Falsche Kiste im Salon | Fledermäuse schießen heraus |
