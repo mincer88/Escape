@@ -67,8 +67,8 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--lanter
 
 /* ---------- HUD ---------- */
 .hud { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bark-solid); border-bottom: 1px solid var(--line); }
-.hud-row { display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: 10px; padding-block: 8px; }
-.timer { font-family: var(--f-mono); font-weight: 700; font-size: 1.45rem; font-variant-numeric: tabular-nums; }
+.hud-row { display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: 10px; padding-block: 5px; }
+.timer { font-family: var(--f-mono); font-weight: 700; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
 .timer.low { color: var(--lantern); }
 .timer.over { color: var(--bad); }
 .pulse { display: flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: .85rem; font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
@@ -76,20 +76,24 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--lanter
 .pulse.hot { color: var(--blood); }
 @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.28); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } }
 .hud-btns { display: flex; gap: 6px; }
-.icon-btn { min-width: 44px; min-height: 44px; border-radius: 10px; border: 1px solid var(--line); background: var(--moss); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 10px; font-size: .85rem; font-weight: 700; }
+.icon-btn { min-width: 40px; min-height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--moss); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 10px; font-size: .85rem; font-weight: 700; }
 .icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
-.chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+.chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
 .chips::-webkit-scrollbar { display: none; }
-.chip { flex: none; min-height: 40px; padding: 4px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); font-size: .85rem; cursor: pointer; }
+.chip { flex: none; min-height: 34px; padding: 3px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); font-size: .85rem; cursor: pointer; }
 .chip.on { background: var(--lantern); color: #1d1206; border-color: var(--lantern); font-weight: 700; }
 .chip.done::after { content: " ✓"; }
 .chip[disabled] { opacity: .35; cursor: default; }
 @media (max-width: 359px) { .timer { font-size: 1.2rem; } .pulse { font-size: .75rem; } .icon-btn { padding: 0 8px; } }
 
 /* ---------- scene ---------- */
-main.scene { padding-block: 16px calc(130px + var(--host-badge-gap, 0px));display: grid; gap: 14px; }
-.place { font-family: var(--f-display); font-size: 2rem; line-height: 1; margin: 0; text-wrap: balance; text-shadow: 0 2px 10px #000; }
-.lede { color: var(--muted); margin: -6px 0 0; text-shadow: 0 1px 6px #000; }
+main.scene { padding-block: 10px calc(90px + var(--host-badge-gap, 0px)); display: grid; gap: 10px; }
+.place { font-family: var(--f-display); font-size: 1.5rem; line-height: 1; margin: 0; text-wrap: balance; text-shadow: 0 2px 10px #000; }
+.lede { color: var(--muted); font-size: .9rem; line-height: 1.35; margin: -4px 0 0; text-shadow: 0 1px 6px #000; }
+/* The picture stays under the HUD so animations stay visible while the player works the controls below it; a landscape phone has no room for that. */
+@media (min-height: 520px) {
+  main.scene > .stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--hud-h, 0px)); z-index: 5; }
+}
 .card { background: var(--bark); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 12px; min-width: 0; }
 .card h3 { margin: 0; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
 .card p { margin: 0; }
@@ -166,8 +170,8 @@ body.uv::after { content: ""; position: fixed; inset: 0; pointer-events: none; z
 .f-hit .f-body { animation: flinch .6s ease-out; transform-box: fill-box; transform-origin: center bottom; }
 @keyframes chop { 30% { transform: rotate(-60deg); } 55% { transform: rotate(25deg); } }
 @keyframes flinch { 30% { transform: rotate(-9deg) translateX(-4px); } }
-.ghost { opacity: 0; }
-.ghost.show { animation: ghost 2.6s 1.6s ease-in-out both; }
+svg .ghost { opacity: 0; }
+svg .ghost.show { animation: ghost 2.6s 1.6s ease-in-out both; }
 @keyframes ghost { 0%, 100% { opacity: 0; } 20%, 62% { opacity: 1; } 64% { opacity: 0; } 66% { opacity: 1; } 70% { opacity: 0; } }
 .gen-run { animation: jitter .09s infinite; transform-box: fill-box; }
 @keyframes jitter { 50% { transform: translate(.6px, -.5px); } }
@@ -225,11 +229,12 @@ body.uv::after { content: ""; position: fixed; inset: 0; pointer-events: none; z
 @keyframes num46 { 0%, 70% { fill: #ff3d5e; } }
 
 /* bridge controls */
-.banks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.bank { border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-height: 120px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.bank h4 { margin: 0; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 4px; flex-wrap: wrap; }
+.banks { display: grid; gap: 6px; }
+#bridgeCard { gap: 8px; }
+.bank { border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.bank h4 { flex-basis: 100%; margin: 0; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 4px; flex-wrap: wrap; }
 .bank.lamp { border-color: var(--lantern); background: linear-gradient(var(--lantern-soft), transparent 70%); }
-.person { min-width: 0; overflow-wrap: anywhere; text-align: left; min-height: 44px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--moss); cursor: pointer; font-size: .88rem; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.person { flex: none; min-width: 0; overflow-wrap: anywhere; text-align: left; min-height: 44px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--moss); cursor: pointer; font-size: .88rem; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .person span { font-family: var(--f-mono); color: var(--muted); flex: none; }
 .person.sel { background: var(--lantern); color: #1d1206; border-color: var(--lantern); }
 .person.sel span { color: #1d1206; }
@@ -262,11 +267,11 @@ body.uv::after { content: ""; position: fixed; inset: 0; pointer-events: none; z
 
 /* inventory */
 .inv { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--bark-solid); border-top: 1px solid var(--line); padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--host-badge-gap, 0px)); }
-.inv .wrap { display: flex; gap: 8px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; align-items: center; }
+.inv .wrap { display: flex; gap: 8px; overflow-x: auto; padding-block: 6px; scrollbar-width: none; align-items: center; }
 .inv .wrap::-webkit-scrollbar { display: none; }
-.inv .label { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); flex: none; }
-.item { flex: none; min-width: 74px; min-height: 58px; border-radius: 10px; border: 1px solid var(--line); background: var(--moss); cursor: pointer; display: grid; justify-items: center; align-content: center; gap: 2px; padding: 4px 8px; font-size: .75rem; font-weight: 700; }
-.item svg { width: 24px; height: 24px; stroke: var(--lantern); fill: none; stroke-width: 1.8; }
+.inv .label { font-size: .55rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); flex: none; }
+.item { flex: none; min-height: 44px; border-radius: 10px; border: 1px solid var(--line); background: var(--moss); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: .78rem; font-weight: 700; }
+.item svg { flex: none; width: 20px; height: 20px; stroke: var(--lantern); fill: none; stroke-width: 1.8; }
 .item.active { border-color: var(--uv); box-shadow: 0 0 14px var(--uv); position: relative; }
 .uv-count { position: absolute; top: 3px; right: 3px; min-width: 20px; height: 20px; padding: 0 4px; border-radius: 10px; background: var(--uv); color: #fff; font-family: var(--f-mono); font-size: .75rem; display: grid; place-items: center; }
 .item.new { animation: glow 1.6s 2; }
@@ -427,9 +432,9 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 
 /* ================= content ================= */
 const ITEMS = {
-  laterne:   { name: 'Laterne',   desc: 'Alte Petroleumlaterne. Sie brennt genau 31 Minuten, sagt der Troll.', icon: 'M8 4h8M9 4v3h6V4M7 7h10l-1 12H8L7 7zM12 11v4M10 21h4' },
+  laterne:   { name: 'Laterne',   desc: 'Alte Petroleumlaterne. Rußig, aber sie brennt.', icon: 'M8 4h8M9 4v3h6V4M7 7h10l-1 12H8L7 7zM12 11v4M10 21h4' },
   uv:        { name: 'UV-Lampe',  desc: 'Schwarzlicht. Jeder Profi liebt Schwarzlicht.', icon: 'M7 3h10v6l-3 3v9h-4v-9L7 9V3zM5 3h14' },
-  kanister:  { name: 'Kanister',  desc: '8 Liter Diesel, randvoll. Riecht nach Generator.', icon: 'M6 6h9l3 3v12H6V6zM9 3h5v3H9zM9 12h6M9 16h6' },
+  kanister:  { name: 'Kanister',  desc: '8 Liter Diesel, randvoll.', icon: 'M6 6h9l3 3v12H6V6zM9 3h5v3H9zM9 12h6M9 16h6' },
   schablone: { name: 'Schablone', desc: 'Ein Zettel mit Gittern, Winkeln und Punkten. Vom Förster.', icon: 'M4 4h16v16H4zM9.3 4v16M14.7 4v16M4 9.3h16M4 14.7h16' },
   amulett:   { name: 'Amulett',   desc: 'Ein Amulett mit einem roten Stein. Es ist warm. Unangenehm warm.', icon: 'M12 3v4M8 3l4 4 4-4M12 7a6 6 0 1 0 0 12 6 6 0 1 0 0-12zM12 11v4' },
   hering:    { name: 'Roter Hering', desc: 'Eingelegt, in Dill. Völlig nutzlos. Und rot. Musst du uns glauben.', icon: 'M3 12c3-4 9-5 13-2l4-3v10l-4-3c-4 3-10 2-13-2zM7 11h.01' },
@@ -1479,6 +1484,7 @@ function render() {
   if (chip) chip.parentElement.scrollLeft = chip.offsetLeft - chip.parentElement.clientWidth / 2 + chip.clientWidth / 2;
   lookAt(lookX, lookY);
   const hud = document.querySelector('.hud');
+  if (hud) document.documentElement.style.setProperty('--hud-h', hud.offsetHeight + 'px');
   toastBox.style.top = (hud ? Math.round(hud.getBoundingClientRect().bottom) + 8 : 16) + 'px';
   afterRender.splice(0).forEach(fn => fn());
   Ambience.apply();
@@ -1584,13 +1590,14 @@ function sceneBridge() {
     return '<div class="bank' + (b.lamp === side ? ' lamp' : '') + '"><h4>' + (side === 'L' ? 'Diesseits' : 'Jenseits') + (b.lamp === side ? '<span>Laterne</span>' : '') + '</h4>' + people + '</div>';
   };
   const slowest = b.sel.length ? Math.max(...b.sel.map(id => walkTime(id, b))) : 0;
-  h += '<div class="card" id="bridgeCard"><h3>Regeln der Brücke</h3>' +
-    '<p>Fünf Leute, eine Laterne, 31 Minuten Brenndauer. Höchstens zwei gleichzeitig auf der Brücke, und die Laterne muss immer mit. Zwei gehen im Tempo des Langsameren.</p>' +
-    '<div class="banks">' + bank('L') + bank('R') + '</div>' +
-    '<div class="row between"><span class="score">Laterne: ' + b.t + ' von ' + BRIDGE_LIMIT + ' Min.</span><span class="score">' + (b.sel.length ? 'Dauer: ' + slowest + ' Min.' : 'Tippe 1 bis 2 Leute bei der Laterne an') + '</span></div>' +
-    '<div class="meter' + (b.failed ? ' bad' : '') + '"><i style="width:' + Math.min(100, b.t / BRIDGE_LIMIT * 100) + '%"></i></div>' +
+  h += '<div class="card" id="bridgeCard">' +
     '<div class="row"><button class="btn primary" data-act="cross"' + (b.sel.length && !b.failed ? '' : ' disabled') + '>' + (b.lamp === 'L' ? 'Rüber' : 'Zurück') + '</button>' +
-    '<button class="btn ghost" data-act="bridgeReset">Von vorn</button></div></div>';
+    '<button class="btn ghost" data-act="bridgeReset">Von vorn</button></div>' +
+    '<div class="row between"><span class="score">Laterne: ' + b.t + '/' + BRIDGE_LIMIT + ' Min.</span><span class="score">' + (b.sel.length ? 'Dauer: ' + slowest + ' Min.' : 'Wähle 1–2 Leute') + '</span></div>' +
+    '<div class="meter' + (b.failed ? ' bad' : '') + '"><i style="width:' + Math.min(100, b.t / BRIDGE_LIMIT * 100) + '%"></i></div>' +
+    '<div class="banks">' + bank('L') + bank('R') + '</div>' +
+    '<h3>Regeln der Brücke</h3>' +
+    '<p>Fünf Leute, eine Laterne, 31 Minuten Brenndauer. Höchstens zwei gleichzeitig auf der Brücke, und die Laterne muss immer mit. Zwei gehen im Tempo des Langsameren.</p></div>';
   return h;
 }
 
@@ -1606,7 +1613,7 @@ function sceneForsthaus() {
       '<div class="opts">' + f.opts.map((o, i) => '<button class="opt" data-act="retort" data-i="' + i + '">' + esc(o) + '</button>').join('') + '</div></div>';
     return h;
   }
-  h += '<div class="card"><div class="say"><b>Marcel, ohne Bart</b>»Ja, ich bin’s. Nein, ich will nicht drüber reden. Hier, der Zettel ist für das Salon-Gedöns. Ich kann den eh nicht lesen.«</div></div>';
+  h += '<div class="card"><div class="say"><b>Marcel, ohne Bart</b>»Ja, ich bin’s. Nein, ich will nicht drüber reden. Hier, nimm den Zettel. Ich kann den eh nicht lesen.«</div></div>';
   if (!S.kanUsed) return h;
   if (S.jugsDone) {
     return h + '<div class="card found"><h3>Generator läuft</h3><p>Er hustet, rattert, läuft. Im ganzen Haus geht das Licht an, auch im Salon.</p>' +
