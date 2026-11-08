@@ -67,7 +67,7 @@ Jeder Ort hat ein Hintergrundgeräusch: Tor und Forsthaus Grillen, Brücke Wind,
 
 ## Netlify
 
-`build.sh` setzt auf der Netlify-Seite 48 Pixel Abstand unter die Inventarleiste, damit die Einblendung unten rechts nichts verdeckt. Im claude.ai-Artefakt gibt es diesen Abstand nicht.
+`build.sh` setzt auf der Netlify-Seite 56 Pixel Abstand unter die Inventarleiste, genau die Höhe der Einblendung „Powered by Netlify“ unten rechts. Die Gestenleiste des Handys liegt in diesem Abstand und kommt nicht extra dazu. Im claude.ai-Artefakt gibt es diesen Abstand nicht.
 
 ## Gutschein
 
