@@ -17,7 +17,7 @@ Fundstücke landen nicht automatisch im Inventar: Konrad nimmt jedes selbst, ind
 | 4 | Salon | Drei-Kisten-Rätsel wie im Parlor von Blue Prince, Aussagen in Freimaurer-Schrift | Blau: „SCHWARZ IST LEER“, Weiß: „DER STEIN IST HIER“, Schwarz: „BLAU SAGT DIE WAHRHEIT“ → **blaue Kiste** | Amulett in der offenen blauen Kiste antippen, erst dann öffnet Raum 46 |
 | 5 | Raum 46 | Mini-Logikgitter (Einstein-Rätsel) | Von links: **Schablone/Affe, Laterne/Mond, Amulett/Schädel, Kanister/Rabe** | Finale mit Gutschein |
 
-Warum Blau: Liegt der Stein in Weiß, sind alle drei Aussagen wahr. Liegt er in Schwarz, sind alle drei falsch. Beides verbietet das Tagebuch des Försters im Salon („Die Kisten reden. Mindestens eine lügt, und mindestens eine sagt die Wahrheit.“). Die Regel gilt nur für die Kisten; die Hinweise am Tor und am Altar sind alle wahr.
+Warum Blau: Liegt der Stein in Weiß, sind alle drei Aussagen wahr. Liegt er in Schwarz, sind alle drei falsch. Beides verbietet das Tagebuch des Försters im Salon (der Zettel direkt unter dem Bild, überschrieben „Aus dem Tagebuch des Försters“, unterschrieben „M. K., Förster“, also Marcel Krüger: „Die Kisten reden. Mindestens eine lügt, und mindestens eine sagt die Wahrheit.“). Die Regel gilt nur für die Kisten; die Hinweise am Tor und am Altar sind alle wahr.
 
 Fechten im Forsthaus: Der Förster nimmt zufällig Beleidigungen aus dieser Liste. Zur Auswahl stehen jeweils die richtige Antwort, zwei Antworten zu anderen Beleidigungen und eine Ausweich-Antwort.
 
