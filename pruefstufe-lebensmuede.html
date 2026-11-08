@@ -405,6 +405,7 @@ const WRONG_BOX_COST = 10 * MINUTE;
 const WRONG_ALTAR_COST = 1 * MINUTE;
 const BRUTE_FORCE_POURS = 10;
 const BRUTE_FORCE_COST = 5 * MINUTE;
+const BRIDGE_FAIL_COST = 2 * MINUTE;
 const SKIPPER_LIMIT_MS = 12000;
 const BRIDGE_LIMIT = 31;
 const WALK_MS_PER_MINUTE = 260;
@@ -1591,8 +1592,7 @@ function sceneBridge() {
   };
   const slowest = b.sel.length ? Math.max(...b.sel.map(id => walkTime(id, b))) : 0;
   h += '<div class="card" id="bridgeCard">' +
-    '<div class="row"><button class="btn primary" data-act="cross"' + (b.sel.length && !b.failed ? '' : ' disabled') + '>' + (b.lamp === 'L' ? 'Rüber' : 'Zurück') + '</button>' +
-    '<button class="btn ghost" data-act="bridgeReset">Von vorn</button></div>' +
+    '<div class="row"><button class="btn primary" data-act="cross"' + (b.sel.length && !b.failed ? '' : ' disabled') + '>' + (b.lamp === 'L' ? 'Rüber' : 'Zurück') + '</button></div>' +
     '<div class="row between"><span class="score">Laterne: ' + b.t + '/' + BRIDGE_LIMIT + ' Min.</span><span class="score">' + (b.sel.length ? 'Dauer: ' + slowest + ' Min.' : 'Wähle 1–2 Leute') + '</span></div>' +
     '<div class="meter' + (b.failed ? ' bad' : '') + '"><i style="width:' + Math.min(100, b.t / BRIDGE_LIMIT * 100) + '%"></i></div>' +
     '<div class="banks">' + bank('L') + bank('R') + '</div>' +
@@ -1890,9 +1890,9 @@ const actions = {
     const allOver = PEOPLE.every(p => b.side[p.id] === 'R');
     afterRender.push(() => animateCrossing(() => {
       if (failedNow) {
-        b.failed = true;
+        b.failed = true; S.penalty += BRIDGE_FAIL_COST;
         Fx.lunge();
-        failure('Die Laterne ist aus. Im Nebel war etwas. Ihr seid wieder am Anfang.', 15);
+        failure('Die Laterne ist aus. Im Nebel war etwas. Ihr seid wieder am Anfang. −2 Minuten.', 15);
         setTimeout(() => { S.bridge = freshBridge(); save(); render(); }, 1800);
         save(); return;
       }
@@ -1910,7 +1910,6 @@ const actions = {
       save(); render();
     }));
   },
-  bridgeReset() { if (!crossAnim) { S.bridge = freshBridge(); Sound.click(); } },
   retort(el) {
     const f = S.fence, choice = f.opts[+el.dataset.i];
     const hit = choice === INSULTS[f.cur].retort;
