@@ -12,14 +12,14 @@ Fundstücke landen nicht automatisch im Inventar: Konrad nimmt jedes selbst, ind
 | 0 | Einweisung | Hausregeln | Keine Regel ist ein Rätselhinweis; die Kisten-Regel steht erst im Salon im Tagebuch des Försters | – |
 | 1 | Tor | Zahlenschloss nach dem viralen „Crack the Code“-Rätsel, neue 4-stellige Instanz | **1289** | Weg zur Brücke. Die Laterne hängt außen am Pfosten und lässt sich jederzeit nehmen (im Bild antippen). Die UV-Lampe liegt links unten zwischen den Wurzeln. |
 | 2 | Brücke | Brücke und Fackel, 5-Personen-Variante | Erst Laterne im Inventar benutzen. Die Laterne brennt 31 Minuten. Nach seinem 3. Gang knickt Konrad um (Krankenwagen) und braucht danach 4 Minuten. Der übliche Plan ohne Umknicken (29 Min.) wird dadurch 32 bis 33 Min. lang und scheitert; meist muss Konrad neu anfangen und so planen, dass sein 3. Gang der letzte ist. Lösung: Konrad+Oliver rüber (3), Konrad zurück (1), Marcel+Olla rüber (12), Oliver zurück (3), Daniel+Oliver rüber (6), Oliver zurück (3), Konrad+Oliver rüber (3, danach Krankenwagen) = **31 Min.**, das Minimum. Alle 8 Lösungen brauchen genau 31 Minuten. | Beim Verlassen: BIERJUNGE → „Hängt!“ → Troll hält den Kanister hin, im Bild antippen. Schließt Konrad das Fenster, hält ihn der Troll auf der Brücke weiter hin. |
-| 3a | Forsthaus | Beleidigungsfechten (Mechanik aus Monkey Island, eigene Texte) | 3 Treffer. Die richtige Antwort enthält dasselbe Schlüsselwort wie die Beleidigung (Tabelle unten). Nach einem Fehler sagt der Förster den richtigen Konter; verpasste Beleidigungen kommen öfter wieder. | Förster ist Marcel, verkleidet; er hält den Zettel (Schablone) hin, im Bild antippen |
+| 3a | Forsthaus | Beleidigungsfechten (Mechanik aus Monkey Island, eigene Texte) | 3 Treffer. Alle vier Antworten greifen das Thema der Beleidigung auf; richtig ist nur die, die den Spieß umdreht (Tabelle unten). Nach einem Fehler sagt der Förster den richtigen Konter; verpasste Beleidigungen kommen öfter wieder. | Förster ist Marcel, verkleidet; er hält den Zettel (Schablone) hin, im Bild antippen |
 | 3b | Forsthaus | Krug-Rätsel 8/5/3 (Tartaglia), Ziel: genau 4 Liter im Kanister | Kanister im Inventar benutzen, dann: K→E, E→Ka, Ka→K, E→Ka, K→E, E→Ka, Ka→K. K = Kanister 8, E = Eimer 5, Ka = Kanne 3. | Licht, Salon offen |
 | 4 | Salon | Drei-Kisten-Rätsel wie im Parlor von Blue Prince, Aussagen in Freimaurer-Schrift | Blau: „SCHWARZ IST LEER“, Weiß: „DER STEIN IST HIER“, Schwarz: „BLAU SAGT DIE WAHRHEIT“ → **blaue Kiste** | Amulett in der offenen blauen Kiste antippen, erst dann öffnet Raum 46 |
 | 5 | Raum 46 | Mini-Logikgitter (Einstein-Rätsel) | Von links: **Schablone/Affe, Laterne/Mond, Amulett/Schädel, Kanister/Rabe** | Finale mit Gutschein |
 
 Warum Blau: Liegt der Stein in Weiß, sind alle drei Aussagen wahr. Liegt er in Schwarz, sind alle drei falsch. Beides verbietet das Tagebuch des Försters im Salon (der Zettel direkt unter dem Bild, überschrieben „Aus dem Tagebuch des Försters“, unterschrieben „M. K., Förster“, also Marcel Krüger: „Die Kisten reden. Mindestens eine lügt, und mindestens eine sagt die Wahrheit.“). Die Regel gilt nur für die Kisten; die Hinweise am Tor und am Altar sind alle wahr.
 
-Fechten im Forsthaus: Der Förster nimmt zufällig Beleidigungen aus dieser Liste. Zur Auswahl stehen jeweils die richtige Antwort, zwei Antworten zu anderen Beleidigungen und eine Ausweich-Antwort.
+Fechten im Forsthaus: Der Förster nimmt zufällig Beleidigungen aus dieser Liste. Zur Auswahl stehen jeweils die richtige Antwort, zwei schwache Antworten zum selben Thema und eine Ausweich-Antwort.
 
 | Beleidigung | Richtige Antwort |
 |---|---|
@@ -45,19 +45,18 @@ UV-Lampe am Tor aufheben und im Inventar einschalten. Sie geht nach 10 Sekunden 
 |---|---|
 | Brücke verlassen (nach dem Lösen) | Der Troll hebt einen Bierkrug mit Schaumkrone und ruft „Eine Sache noch, Konrad … BIERJUNGE!“. Einzige Antwort: „Hängt!“. Dann gibt er Konrad den Kanister und behält den Krug. |
 | Konrads 3. Gang über die Brücke | Er knickt um: Blaulicht, Martinshorn, ein Notarztwagen fährt vor. Sanitäter: Röntgen, Schiene, ab jetzt humpelt Konrad (4 statt 1 Minute). Jede Lösung schickt Konrad mindestens dreimal über die Brücke, die Szene kommt also immer. |
-| Erster Besuch Forsthaus | Kurz steht jemand im Fenster, Knarzen, deine Aufnahme „Konrad“; später der Funkspruch, dass der Förster Marcels Schuhe trägt |
+| Erster Besuch Forsthaus | Kurz steht jemand im Fenster, Knarzen, deine Aufnahme „Konrad“; später der Funkspruch, dass der Förster Marcels Schuhe trägt. Kein Funkspruch zum Fenster. |
 | Förster antippen | Er meckert über Kostüme und Karneval, will lieber in Afrika sein oder an seinem Nerd-Projekt sitzen (9 Sprüche, nie zweimal hintereinander derselbe) |
 | Fechten gewonnen | Der Förster reißt sich den Bart ab: Es ist Marcel, der Verkleidungen und Karneval hasst. Danach steht er ohne Bart da. |
-| Glas auf dem Salon-Kamin antippen | „IGITT! Das ist ja STILLES Wasser!“, Achievement „Igitt“, danach ein Funkspruch zum fehlenden Sprudel |
+| Glas auf dem Salon-Kamin antippen | Sprechblase „IGITT! Das ist ja STILLES Wasser!“, danach das Achievement „Igitt“. Kein Funkspruch. |
 | Laterne erlischt auf der Brücke (über 31 Min.) | Bildschirm schwarz, ein Gesicht springt heran, Schrei |
 | Eine Kiste in der ersten Minute im Salon angetippt (richtig oder falsch) | Jumpscare (Gesicht und Schrei), dann die Warnung „Wenn du nochmal rätst, wird das Spiel zurückgesetzt.“ Nur eine Drohung, es passiert nie. |
 | Falsche Kiste im Salon | Fledermäuse schießen heraus |
 | Erstes Schwarzlicht | Blutige Handabdrücke am Bildschirmrand, „Oh, Schwarzlicht“; beim ersten Ausgehen die Akku-Meldung, beim zweiten Einschalten der Farbwitz |
 | Erstes Betreten des Salons | Stromausfall, Herzschlag, deine Aufnahme „Konrad“ |
 | Tor geöffnet | Etwas huscht zwischen den Bäumen vorbei, dazu deine Aufnahme „Psssst … hier drüben“ |
-| Hering genommen | „Hinter dir! Ein dreiköpfiger Affe!“ |
 | Jeder Ortswechsel | Kurz leuchten Augen zwischen den Bäumen im Hintergrund |
-| Funk-Sprüche zur Rot-Grün-Schwäche | z. B. „Die roten Ziffern, Konrad. Die ROTEN. Also auf keinen Fall die grünen.“ Kein Rätsel hängt von Rot oder Grün ab. |
+| Funk-Sprüche zur Rot-Grün-Schwäche | z. B. „Die roten Ziffern, Konrad. Die ROTEN. Also auf keinen Fall die grünen.“ Kein Rätsel hängt von Rot oder Grün ab. Am Altar gibt es keinen Farbwitz. |
 
 Die Stimme sind deine Aufnahmen „Recording (2)“ und „Recording (3)“, im Spiel eingebettet, etwas langsamer und tiefer, mit Hall. Sie laufen nur bei eingeschaltetem Ton.
 

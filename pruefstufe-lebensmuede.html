@@ -409,6 +409,7 @@ const BRIDGE_FAIL_COST = 2 * MINUTE;
 const SKIPPER_LIMIT_MS = 12000;
 const BRIDGE_LIMIT = 31;
 const WALK_MS_PER_MINUTE = 260;
+const BUBBLE_MS = 3400;
 const JUG_CAPS = [8, 5, 3];
 const FENCE_WINS_NEEDED = 3;
 const PULSE_ACHIEVEMENT = 140;
@@ -481,17 +482,17 @@ const PEOPLE = [
 
 // Each retort repeats the key word of exactly one insult and turns it around; no retort contains another insult's key word.
 const INSULTS = [
-  { insult: 'Ich habe mehr Räume gelöst, als du je von innen gesehen hast!', retort: 'Und aus jedem dieser Räume musste man dich raustragen.' },
-  { insult: 'Dein Puls ist höher als dein Rätsel-Niveau!', retort: 'Mein Puls ist nur so hoch, weil ich dein Gesicht ertragen muss.' },
-  { insult: 'Bei dir meldet sich der Spielleiter schon nach fünf Minuten über Funk!', retort: 'Über Funk will er nur wissen, wie man so schnell sein kann.' },
-  { insult: 'Du würdest sogar die Deko aufschrauben!', retort: 'Die Deko hier sieht wenigstens gepflegter aus als du.' },
-  { insult: 'Du schaust doch gleich wieder unter den Teppich!', retort: 'Unter dem Teppich suche ich nur deinen Verstand.' },
-  { insult: 'Du findest nicht mal den Schlüssel in deiner eigenen Hosentasche!', retort: 'Deinen Schlüssel hat man schon vor Jahren weggeworfen. Zu Recht.' },
-  { insult: 'Bevor du hier irgendwas löst, ist der Timer längst abgelaufen!', retort: 'Bei dir läuft der Timer rückwärts, damit es nach Fortschritt aussieht.' },
-  { insult: 'Ich habe schon Schlösser geknackt, da konntest du noch nicht zählen!', retort: 'Und an jedem dieser Schlösser stand „Ziehen“.' },
-  { insult: 'Du übersiehst jeden Hinweis, der nicht blinkt!', retort: 'Bei dir müsste jeder Hinweis blinken, hupen und dich an die Hand nehmen.' },
-  { insult: 'Ohne Taschenlampe läufst du heulend gegen den nächsten Baum!', retort: 'Mit deiner Taschenlampe hat noch nie jemand irgendwas gefunden.' },
-  { insult: 'Du siehst aus, als hätte man dich an Karneval im Wald vergessen!', retort: 'Karneval? Sagt der Förster mit dem angeklebten Bart.' },
+  { insult: 'Ich habe mehr Räume gelöst, als du je von innen gesehen hast!', retort: 'Und aus jedem dieser Räume musste man dich raustragen.', decoys: ['Ich habe auch schon mal einen Raum gelöst. Mit Hilfe.', 'Räume von innen sehen ist sowieso überbewertet.'] },
+  { insult: 'Dein Puls ist höher als dein Rätsel-Niveau!', retort: 'Mein Puls ist nur so hoch, weil ich dein Gesicht ertragen muss.', decoys: ['Mein Puls ist immer so. Das liegt in der Familie.', 'Puls? Ich glaube, ich habe gar keinen mehr.'] },
+  { insult: 'Bei dir meldet sich der Spielleiter schon nach fünf Minuten über Funk!', retort: 'Über Funk will er nur wissen, wie man so schnell sein kann.', decoys: ['Über Funk reden wir eigentlich nur übers Wetter.', 'Der Funk ist doch nur für Notfälle. Also für mich.'] },
+  { insult: 'Du würdest sogar die Deko aufschrauben!', retort: 'Die Deko hier sieht wenigstens gepflegter aus als du.', decoys: ['Die Deko schraube ich nur auf, wenn keiner guckt.', 'Deko ist doch zum Anfassen da, oder?'] },
+  { insult: 'Du schaust doch gleich wieder unter den Teppich!', retort: 'Unter dem Teppich suche ich nur deinen Verstand.', decoys: ['Unter dem Teppich liegt doch immer irgendwas.', 'Den Teppich habe ich schon dreimal angehoben.'] },
+  { insult: 'Du findest nicht mal den Schlüssel in deiner eigenen Hosentasche!', retort: 'Deinen Schlüssel hat man schon vor Jahren weggeworfen. Zu Recht.', decoys: ['Meinen Schlüssel lege ich immer in den Kühlschrank.', 'Schlüssel braucht man nicht, wenn man laut genug klingelt.'] },
+  { insult: 'Bevor du hier irgendwas löst, ist der Timer längst abgelaufen!', retort: 'Bei dir läuft der Timer rückwärts, damit es nach Fortschritt aussieht.', decoys: ['Der Timer ist doch eher ein Vorschlag.', 'Welcher Timer? Ich habe den Timer gar nicht gesehen.'] },
+  { insult: 'Ich habe schon Schlösser geknackt, da konntest du noch nicht zählen!', retort: 'Und an jedem dieser Schlösser stand „Ziehen“.', decoys: ['Mein Fahrradschloss kriege ich auch nie auf.', 'Schlösser knacken ist doch verboten.'] },
+  { insult: 'Du übersiehst jeden Hinweis, der nicht blinkt!', retort: 'Bei dir müsste jeder Hinweis blinken, hupen und dich an die Hand nehmen.', decoys: ['Hinweise lese ich grundsätzlich erst am Ende.', 'Jeder Hinweis ist irgendwie ein Hinweis.'] },
+  { insult: 'Ohne Taschenlampe läufst du heulend gegen den nächsten Baum!', retort: 'Mit deiner Taschenlampe hat noch nie jemand irgendwas gefunden.', decoys: ['Meine Taschenlampe ist leider seit Jahren leer.', 'Gegen Bäume laufe ich nur, wenn die Taschenlampe aus ist.'] },
+  { insult: 'Du siehst aus, als hätte man dich an Karneval im Wald vergessen!', retort: 'Karneval? Sagt der Förster mit dem angeklebten Bart.', decoys: ['An Karneval bin ich immer im Wald. Freiwillig.', 'Karneval ist nur einmal im Jahr. Zum Glück.'] },
 ];
 const LAME = ['Ach ja?', 'Das sag ich dem Spielleiter!', 'Hinter dir, ein dreiköpfiger Affe!'];
 const AFFE = LAME[2];
@@ -546,7 +547,6 @@ const QUIPS = [
 const COLOR_JOKES = {
   uv: 'Die roten Ziffern, Konrad. Die ROTEN. Also auf keinen Fall die grünen.',
   generator: 'Läuft er? Ganz einfach: Grün heißt an, rot heißt aus. Sag uns einfach, was du siehst.',
-  altar: 'Kleiner Tipp: Die richtige Rune leuchtet grün. Die falsche rot. Viel Spaß.',
 };
 
 const ACHIEVEMENTS = {
@@ -940,7 +940,7 @@ function bubble(text) {
   const b = document.createElement('div');
   b.className = 'bubble'; b.textContent = text;
   stage.appendChild(b);
-  setTimeout(() => b.remove(), 3400);
+  setTimeout(() => b.remove(), BUBBLE_MS);
 }
 
 /* ================= voice ================= */
@@ -1591,13 +1591,12 @@ function sceneBridge() {
     return '<div class="bank' + (b.lamp === side ? ' lamp' : '') + '"><h4>' + (side === 'L' ? 'Diesseits' : 'Jenseits') + (b.lamp === side ? '<span>Laterne</span>' : '') + '</h4>' + people + '</div>';
   };
   const slowest = b.sel.length ? Math.max(...b.sel.map(id => walkTime(id, b))) : 0;
-  h += '<div class="card" id="bridgeCard">' +
+  h += '<div class="card" id="bridgeCard"><h3>Regeln der Brücke</h3>' +
+    '<p>Fünf Leute, eine Laterne, 31 Minuten Brenndauer. Höchstens zwei gleichzeitig auf der Brücke, und die Laterne muss immer mit. Zwei gehen im Tempo des Langsameren.</p>' +
     '<div class="row"><button class="btn primary" data-act="cross"' + (b.sel.length && !b.failed ? '' : ' disabled') + '>' + (b.lamp === 'L' ? 'Rüber' : 'Zurück') + '</button></div>' +
     '<div class="row between"><span class="score">Laterne: ' + b.t + '/' + BRIDGE_LIMIT + ' Min.</span><span class="score">' + (b.sel.length ? 'Dauer: ' + slowest + ' Min.' : 'Wähle 1–2 Leute') + '</span></div>' +
     '<div class="meter' + (b.failed ? ' bad' : '') + '"><i style="width:' + Math.min(100, b.t / BRIDGE_LIMIT * 100) + '%"></i></div>' +
-    '<div class="banks">' + bank('L') + bank('R') + '</div>' +
-    '<h3>Regeln der Brücke</h3>' +
-    '<p>Fünf Leute, eine Laterne, 31 Minuten Brenndauer. Höchstens zwei gleichzeitig auf der Brücke, und die Laterne muss immer mit. Zwei gehen im Tempo des Langsameren.</p></div>';
+    '<div class="banks">' + bank('L') + bank('R') + '</div></div>';
   return h;
 }
 
@@ -1733,8 +1732,7 @@ function newFenceRound(prev, prevWasHit) {
   const missed = prev ? (prev.missed || []).filter(i => i !== prev.cur).concat(prevWasHit ? [] : [prev.cur]) : [];
   const choices = INSULTS.map((_, i) => i).filter(i => !solved.includes(i) && (!prev || i !== prev.cur));
   const cur = pick(choices.concat(choices.filter(i => missed.includes(i))));
-  const others = shuffle(INSULTS.map((x, i) => i).filter(i => i !== cur)).slice(0, 2).map(i => INSULTS[i].retort);
-  return { wins, cur, solved, missed, lastMiss: prev && !prevWasHit ? prev.cur : -1, opts: shuffle([INSULTS[cur].retort, ...others, pick(LAME)]) };
+  return { wins, cur, solved, missed, lastMiss: prev && !prevWasHit ? prev.cur : -1, opts: shuffle([INSULTS[cur].retort, ...INSULTS[cur].decoys, pick(LAME)]) };
 }
 
 /* ================= bridge walking ================= */
@@ -1796,9 +1794,9 @@ const actions = {
     if (!S.seen[loc.id]) {
       S.seen[loc.id] = true;
       if (loc.id === 'bruecke') afterRender.push(() => setTimeout(() => bubble('Na? Auch hier, um über meine Brücke zu latschen?'), 500));
-      if (loc.id === 'forsthaus') { once.add('ghost'); setTimeout(() => Sound.creak(), 1700); setTimeout(() => Voice.say('konrad'), 2100); setTimeout(() => radio('Hast du das auch gesehen? Im Fenster? … Nein? Gut.'), 4600); setTimeout(() => radio('Komisch. Der Förster trägt dieselben Schuhe wie Marcel. Und wo ist Marcel eigentlich hin?'), 9000); }
+      if (loc.id === 'forsthaus') { once.add('ghost'); setTimeout(() => Sound.creak(), 1700); setTimeout(() => Voice.say('konrad'), 2100); setTimeout(() => radio('Komisch. Der Förster trägt dieselben Schuhe wie Marcel. Und wo ist Marcel eigentlich hin?'), 9000); }
       if (loc.id === 'salon') { salonArrivedAt = Date.now(); setTimeout(() => Fx.blackout(), 700); setTimeout(() => radio('Das Porträt ist von M. K. F. Er schaut immer so. Glauben wir.'), 7500); }
-      if (loc.id === 'altar') { Sound.rumble(); setTimeout(() => radio('Raum 46. Wir kennen da jemanden, der sich darüber freut.'), 900); setTimeout(() => radio(COLOR_JOKES.altar), 5200); }
+      if (loc.id === 'altar') { Sound.rumble(); setTimeout(() => radio('Raum 46. Wir kennen da jemanden, der sich darüber freut.'), 900); }
     }
   },
   bierjunge(el) {
@@ -1814,7 +1812,6 @@ const actions = {
     give(id); Sound.click(); buzz(30);
     toast(item.text, 'ok');
     if (id === 'amulett') setTimeout(() => Sound.creak(), 500);
-    if (id === 'hering') setTimeout(() => radio('Hinter dir! Ein dreiköpfiger Affe! … Nein? Na gut. Weiter.'), 1200);
     if (el.dataset.loc) { closeSheet(); actions.go(el); }
   },
   gateWheel(el) { spin(S.lock, el); },
@@ -1851,7 +1848,7 @@ const actions = {
   water() {
     Sound.tone(180, 0.3, 'square', 0.08, 0, 90); buzz([40, 30, 40]);
     afterRender.push(() => bubble('IGITT! Das ist ja STILLES Wasser!'));
-    if (!S.ach.wasser) { unlock('wasser'); setTimeout(() => radio('Sorry, Konrad. Der Sprudel war aus. Wir sind ja keine Unmenschen.'), 2600); }
+    if (!S.ach.wasser) setTimeout(() => { unlock('wasser'); save(); }, BUBBLE_MS);
   },
   foerster() {
     Sound.tone(140, 0.3, 'sawtooth', 0.08, 0, 100);
