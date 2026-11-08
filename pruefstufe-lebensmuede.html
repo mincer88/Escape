@@ -572,6 +572,7 @@ const HINTS = {
   ohneSchablone: 'Die Gravuren sind Geheimschrift. Der Förster wollte dir einen Zettel geben. Hast du ihn genommen?',
   liegtDa: 'Da wartet noch was auf dich. Tipp es im Bild an und nimm es mit.',
   brueckeDone: 'Brücke geschafft. Der Troll hat übrigens Hunger. Auf was Eingelegtes. Rotes. Falls dir sowas über den Weg läuft …',
+  brueckeSatt: 'Brücke geschafft, Troll satt. Hier gibt es nichts mehr zu tun. Weiter zum Forsthaus.',
   foerster: [
     'Hör genau hin. Die passende Antwort nimmt etwas aus seiner Beleidigung auf und dreht es gegen ihn.',
     'Such das Schlüsselwort: Die passende Antwort enthält dasselbe Wort, mit dem er dich beleidigt. Ausweichen zählt nicht: kein „Ach ja?“, kein Petzen, keine Affen.',
@@ -627,7 +628,7 @@ function freshState() {
     briefOpenedAt: 0, startedAt: 0, penalty: 0, finishedAt: 0, paused: 0, hiddenAt: 0,
     inv: [], newItem: '', uv: false,
     lock: [0, 0, 0, 0], gate: false, uvTaken: false,
-    hlock: [0, 0, 0, 0], herring: false,
+    hlock: [0, 0, 0, 0], herring: false, herringFed: false,
     lit: false, bridge: freshBridge(), bridgeDone: false,
     fence: null, fenceDone: false, fenceAnswers: [],
     kanUsed: false, jugs: [8, 0, 0], jugSel: -1, jugMoves: 0, jugPours: 0, jugsDone: false,
@@ -883,6 +884,8 @@ function failure(text, amount = 8) {
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]); }
 function give(id) { if (!S.inv.includes(id)) { S.inv.push(id); S.newItem = id; } }
 function has(id) { return S.inv.includes(id); }
+/** The herring leaves the box once: into the inventory, and from there possibly into the troll. */
+function herringTaken() { return has('hering') || S.herringFed; }
 // Items lie in the scene or are handed over; Konrad takes each one himself.
 const TAKE = {
   laterne:   { text: 'Laterne vom Pfosten genommen. Riecht nach Petroleum.' },
@@ -895,7 +898,7 @@ const TAKE = {
 const LOOK = {
   tor: () => S.gate ? 'Der Bolzen ist zurückgeschnappt. Hinter dem Tor führt ein Pfad zur Schlucht.' : 'Ein Stahltor mit Vorhängeschloss. Vier Rädchen, vier Ziffern.',
   holzkiste: () => !S.herring ? 'Mit Kreide beschriftet: NICHT ÖFFNEN. Ein vierstelliges Zahlenschloss.'
-    : has('hering') ? 'Offen. Leer bis auf einen Geruch nach Dill, der nie wieder weggeht.' : 'Offen. Darin liegt ein eingelegter roter Hering.',
+    : herringTaken() ? 'Offen. Leer bis auf einen Geruch nach Dill, der nie wieder weggeht.' : 'Offen. Darin liegt ein eingelegter roter Hering.',
   generator: () => !S.kanUsed ? 'Der Tank ist leer. Daneben stehen ein 5-Liter-Eimer und eine 3-Liter-Kanne. Was fehlt, ist Sprit.'
     : S.jugsDone ? 'Er hustet, rattert, läuft. Im ganzen Haus brennt Licht.' : 'Er braucht genau 4 Liter, direkt aus dem Kanister.',
   blau: () => has('amulett') ? 'Leer. Nur noch ein Abdruck im Samt.' : 'Auf Samt liegt ein Amulett mit einem roten Stein.',
@@ -1245,7 +1248,7 @@ function artTor() {
     (has('laterne') ? '' : '<g class="hot" data-act="take" data-id="laterne" role="button" aria-label="Laterne"><rect x="234" y="90" width="28" height="44" fill="transparent"/><g transform="translate(247 104) scale(1.6)"><use href="#p-lan"/></g></g>') +
     (S.uvTaken ? '' : '<g class="hot" data-act="takeUv" role="button" aria-label="UV-Lampe aufheben"><rect x="40" y="184" width="50" height="26" fill="transparent"/><g transform="rotate(-18 64 198)"><rect x="54" y="194" width="22" height="7" rx="2" fill="#3a3550"/><rect x="74" y="192" width="5" height="11" rx="1" fill="#6c63a8"/><ellipse cx="80" cy="197.5" rx="1.5" ry="5" fill="#b9a6ff" class="glow-pulse"/></g></g>') +
     '<g class="hot" transform="translate(272 170)" data-act="look" data-id="holzkiste" role="button" aria-label="Holzkiste"><rect width="56" height="34" fill="#5a4129" stroke="#3a2a19"/><path d="M0 11 H56 M0 22 H56" stroke="#3a2a19"/>' +
-      (S.herring ? '<path d="M-2 0 L22 -18 L58 -6 L56 0Z" fill="#6b4f33" stroke="#3a2a19"/>' + (has('hering') ? '' : '<g class="hot" data-act="take" data-id="hering" role="button" aria-label="Hering nehmen"><rect x="18" y="-22" width="44" height="30" fill="transparent"/><path d="M30 0 Q38 -10 46 -4 L50 -9 L50 2Z" fill="#c0392b"/></g>') : '<rect y="-6" width="56" height="7" fill="#6b4f33" stroke="#3a2a19"/><text x="28" y="20" text-anchor="middle" font-size="7.5" fill="#efece4" font-family="IM Fell English SC, serif">NICHT ÖFFNEN</text>') + '</g>' +
+      (S.herring ? '<path d="M-2 0 L22 -18 L58 -6 L56 0Z" fill="#6b4f33" stroke="#3a2a19"/>' + (herringTaken() ? '' : '<g class="hot" data-act="take" data-id="hering" role="button" aria-label="Hering nehmen"><rect x="18" y="-22" width="44" height="30" fill="transparent"/><path d="M30 0 Q38 -10 46 -4 L50 -9 L50 2Z" fill="#c0392b"/></g>') : '<rect y="-6" width="56" height="7" fill="#6b4f33" stroke="#3a2a19"/><text x="28" y="20" text-anchor="middle" font-size="7.5" fill="#efece4" font-family="IM Fell English SC, serif">NICHT ÖFFNEN</text>') + '</g>' +
     uvText(101, 156, 'I·1')
   );
 }
@@ -1453,7 +1456,7 @@ const LOCS = [
 function hintKey() {
   switch (S.loc) {
     case 'tor': return S.gate ? 'torDone' : 'tor';
-    case 'bruecke': return !S.lit ? (has('laterne') ? 'dunkel' : 'ohneLaterne') : S.bridgeDone ? 'brueckeDone' : 'bruecke';
+    case 'bruecke': return !S.lit ? (has('laterne') ? 'dunkel' : 'ohneLaterne') : S.bridgeDone ? (S.herringFed ? 'brueckeSatt' : 'brueckeDone') : 'bruecke';
     case 'forsthaus': return !S.fenceDone ? 'foerster' : !has('schablone') ? 'liegtDa' : !S.kanUsed ? (has('kanister') ? 'kanister' : 'ohneKanister') : S.jugsDone ? 'forsthausDone' : 'jugs';
     case 'salon': return !has('schablone') ? 'ohneSchablone' : !S.boxDone ? 'salon' : has('amulett') ? 'salonDone' : 'liegtDa';
     default: return 'altar';
@@ -1796,7 +1799,7 @@ const actions = {
   },
   take(el) {
     const id = el.dataset.id, item = TAKE[id];
-    if (!item || has(id)) return;
+    if (!item || has(id) || (id === 'hering' && S.herringFed)) return;
     give(id); Sound.click(); buzz(30);
     toast(item.text, 'ok');
     if (id === 'amulett') setTimeout(() => Sound.creak(), 500);
@@ -2091,11 +2094,21 @@ function useItem(id) {
     return;
   }
   if (id === 'hering') {
-    if (S.loc === 'bruecke') { unlock('troll'); afterRender.push(() => bubble('Falsches Spiel, Kumpel. Ich bin hier nur Deko.')); }
+    if (S.loc === 'bruecke') feedTroll();
     else toast('Riecht nach Ostsee und schlechten Entscheidungen.');
     return;
   }
   if (id === 'amulett') toast(S.loc === 'altar' ? 'Leg es auf einen Sockel. Tippe dafür unten auf einen Platz.' : 'Es wird wärmer. Irgendwo will es hin.');
+}
+
+/** The troll takes the herring; the achievement follows only once Konrad has closed the troll's answer. */
+function feedTroll() {
+  S.inv = S.inv.filter(x => x !== 'hering'); S.herringFed = true;
+  Sound.tone(110, 0.25, 'triangle', 0.15, 0, 80);
+  afterRender.push(() => openSheet('<h2>Der Troll nimmt den Hering</h2><svg class="sheet-troll" viewBox="112 118 140 104" aria-hidden="true">' + trollArt(false) + '</svg>' +
+    '<div class="say"><b>Troll</b>»Falsches Spiel, Kumpel. Ich bin hier nur Deko.«</div>' +
+    '<p>Er schluckt den Hering trotzdem. Am Stück.</p>' +
+    '<button class="btn primary" data-act="close">Weiter</button>', () => { unlock('troll'); save(); }));
 }
 
 function openFunk() {
@@ -2116,16 +2129,22 @@ function openFunk() {
 }
 
 let sheetOpen = false;
-function openSheet(html) {
+let sheetClosed = null;
+/** Shows a bottom sheet; onClose runs once when it goes away, by button, backdrop or a replacing sheet. */
+function openSheet(html, onClose = null) {
   closeSheet();
   const back = document.createElement('div');
   back.className = 'sheet-back'; back.id = 'sheet';
   back.innerHTML = '<div class="sheet" role="dialog" aria-modal="true">' + html + '</div>';
   back.addEventListener('click', e => { if (e.target === back) closeSheet(); });
   document.body.appendChild(back);
-  sheetOpen = true;
+  sheetOpen = true; sheetClosed = onClose;
 }
-function closeSheet() { const s = document.getElementById('sheet'); if (s) s.remove(); sheetOpen = false; }
+function closeSheet() {
+  const s = document.getElementById('sheet'); if (s) s.remove(); sheetOpen = false;
+  const after = sheetClosed; sheetClosed = null;
+  if (after) after();
+}
 
 // Silent on purpose: the protocol on the finale screen lists them, toasts would cover the opening door.
 function finishAchievements() {
