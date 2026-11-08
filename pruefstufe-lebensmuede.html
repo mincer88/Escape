@@ -560,19 +560,19 @@ const HINTS = {
     '7, 0, 3 und 4 sind raus. Was bleibt dann von 3709 übrig, und wo steht es?',
     'Aus 7418 bleiben nur 1 und 8. Schau in 7418 und 8207 nach, wo die beiden nicht stehen dürfen.',
   ],
-  torDone: 'Hier ist alles erledigt. Die Kiste? Kein Kommentar. Die grüne übrigens.',
+  torDone: ['Hier ist alles erledigt. Die Kiste? Kein Kommentar. Die grüne übrigens.'],
   dunkel: ['Dein Inventar ist keine Deko. ' + 'Tipp unten auf die Laterne. Die grüne. … Es gibt nur eine. Dann „Hier benutzen“.'],
   bruecke: [
     'Die Langsamen kosten am meisten. Wie oft willst du Marcel und Olla wirklich über die Brücke schicken?',
     'Marcel und Olla gehen zusammen, und keiner von beiden bringt die Laterne zurück. Dafür muss drüben schon jemand Schnelles warten.',
     'Zurück laufen nur die Schnellen. Und schnell ist nicht nur Konrad.',
   ],
-  ohneLaterne: 'Ohne Licht geht hier keiner rüber. Am Tor hing doch was am Pfosten.',
-  ohneKanister: 'Der Generator hat Durst. Und der Troll an der Brücke wollte dir noch was mitgeben.',
-  ohneSchablone: 'Die Gravuren sind Geheimschrift. Der Förster wollte dir einen Zettel geben. Hast du ihn genommen?',
-  liegtDa: 'Da wartet noch was auf dich. Tipp es im Bild an und nimm es mit.',
-  brueckeDone: 'Brücke geschafft. Der Troll hat übrigens Hunger. Auf was Eingelegtes. Rotes. Falls dir sowas über den Weg läuft …',
-  brueckeSatt: 'Brücke geschafft, Troll satt. Hier gibt es nichts mehr zu tun. Weiter zum Forsthaus.',
+  ohneLaterne: ['Ohne Licht geht hier keiner rüber. Am Tor hing doch was am Pfosten.'],
+  ohneKanister: ['Der Generator hat Durst. Und der Troll an der Brücke wollte dir noch was mitgeben.'],
+  ohneSchablone: ['Die Gravuren sind Geheimschrift. Der Förster wollte dir einen Zettel geben. Hast du ihn genommen?'],
+  liegtDa: ['Da wartet noch was auf dich. Tipp es im Bild an und nimm es mit.'],
+  brueckeDone: ['Brücke geschafft. Der Troll hat übrigens Hunger. Auf was Eingelegtes. Rotes. Falls dir sowas über den Weg läuft …'],
+  brueckeSatt: ['Brücke geschafft, Troll satt. Hier gibt es nichts mehr zu tun. Weiter zum Forsthaus.'],
   foerster: [
     'Hör genau hin. Die passende Antwort nimmt etwas aus seiner Beleidigung auf und dreht es gegen ihn.',
     'Such das Schlüsselwort: Die passende Antwort enthält dasselbe Wort, mit dem er dich beleidigt. Ausweichen zählt nicht: kein „Ach ja?“, kein Petzen, keine Affen.',
@@ -583,14 +583,14 @@ const HINTS = {
     'Fang so an: Kanister → Eimer, Eimer → Kanne, Kanne → Kanister.',
     'Danach sind 6 Liter im Kanister und 2 im Eimer. Mach im selben Rhythmus weiter: Die Kanne ist dein Messbecher.',
   ],
-  forsthausDone: 'Der Generator läuft, der Förster schmollt. Weiter in den Salon.',
+  forsthausDone: ['Der Generator läuft, der Förster schmollt. Weiter in den Salon.'],
   salon: [
     'Die Gravuren sind Freimaurer-Schrift. Die Schablone aus deinem Inventar ist der Schlüssel.',
     'Lies die Sicherheitseinweisung noch einmal (Menü oben rechts). Regel 3 gilt auch für Kisten.',
     'Spiel jede Kiste durch: Wenn der Stein dort liegt, welche Aussagen stimmen dann? Es darf nicht alles wahr und nicht alles falsch sein.',
     'Liegt der Stein in der weißen Kiste, sagen alle drei die Wahrheit. Das verbietet Regel 3. Und wie sieht es bei der schwarzen aus?',
   ],
-  salonDone: 'Das Amulett hast du. Hinter dem Forsthaus wartet Raum 46.',
+  salonDone: ['Das Amulett hast du. Hinter dem Forsthaus wartet Raum 46.'],
   altar: [
     'Schablone, Laterne und Amulett liegen direkt nebeneinander, in dieser Reihenfolge. Wo bleibt dann der Kanister?',
     'Der Kanister liegt an einem Rand, auf dem Raben. Welcher Rand passt, entscheidet die Schablone.',
@@ -599,7 +599,11 @@ const HINTS = {
 };
 
 /** Place names for the tips section of the Funkprotokoll, in game order; only paid tip lists appear here. */
-const HINT_PLACES = { tor: 'Tor', dunkel: 'Brücke', bruecke: 'Brücke', foerster: 'Förster', kanister: 'Forsthaus', jugs: 'Generator', salon: 'Salon', altar: 'Raum 46' };
+const HINT_PLACES = {
+  tor: 'Tor', torDone: 'Tor', ohneLaterne: 'Brücke', dunkel: 'Brücke', bruecke: 'Brücke', brueckeDone: 'Brücke', brueckeSatt: 'Brücke',
+  foerster: 'Förster', liegtDa: 'Fundstück', ohneKanister: 'Forsthaus', kanister: 'Forsthaus', jugs: 'Generator', forsthausDone: 'Forsthaus',
+  ohneSchablone: 'Salon', salon: 'Salon', salonDone: 'Salon', altar: 'Raum 46',
+};
 
 const BRIEFING_RULES = [
   'Nichts über Kopfhöhe. Gilt auch für Bäume.',
@@ -1993,6 +1997,11 @@ const actions = {
     }
   },
   funk() { openFunk(); },
+  /** Asks once more before a paid hint; "pay" names the action that takes the 2 minutes. */
+  hintAsk(el) {
+    openSheet('<h2>Sicher?</h2><p>Es kostet dich 2 Minuten.</p>' +
+      '<div class="row"><button class="btn primary" data-act="' + el.dataset.pay + '">Ja, Tipp holen</button><button class="btn ghost" data-act="funk">Doch nicht</button></div>');
+  },
   hint() {
     const key = hintKey();
     S.hints[key] = (S.hints[key] || 0) + 1;
@@ -2113,18 +2122,13 @@ function feedTroll() {
 
 function openFunk() {
   const key = hintKey(), entry = HINTS[key];
-  let body;
-  if (typeof entry === 'string') {
-    body = '<p class="tip">' + esc(entry) + '</p>';
-  } else {
-    const got = S.hints[key] || 0;
-    body = entry.slice(0, got).map((t, i) => '<p class="tip"><b>Tipp ' + (i + 1) + ':</b> ' + esc(t) + '</p>').join('');
-    if (got < entry.length) body += '<button class="btn primary" data-act="hint">Tipp ' + (got + 1) + ' holen (−2:00)</button>';
-    else if (key === 'foerster') {
-      if (S.fenceAnswers.includes(S.fence.cur)) body += '<p class="tip"><b>Antwort:</b> »' + esc(INSULTS[S.fence.cur].retort) + '«</p>';
-      else body += '<button class="btn primary" data-act="fenceAnswer">Antwort auf diese Beleidigung (−2:00)</button>';
-    } else body += '<p class="hint-line">Mehr gibt der Funk nicht her.</p>';
-  }
+  const got = S.hints[key] || 0;
+  let body = entry.slice(0, got).map((t, i) => '<p class="tip"><b>Tipp ' + (i + 1) + ':</b> ' + esc(t) + '</p>').join('');
+  if (got < entry.length) body += '<button class="btn primary" data-act="hintAsk" data-pay="hint">Tipp ' + (got + 1) + ' holen (−2:00)</button>';
+  else if (key === 'foerster') {
+    if (S.fenceAnswers.includes(S.fence.cur)) body += '<p class="tip"><b>Antwort:</b> »' + esc(INSULTS[S.fence.cur].retort) + '«</p>';
+    else body += '<button class="btn primary" data-act="hintAsk" data-pay="fenceAnswer">Antwort auf diese Beleidigung (−2:00)</button>';
+  } else body += '<p class="hint-line">Mehr gibt der Funk nicht her.</p>';
   openSheet('<h2>Funkgerät</h2><p class="hint-line" style="text-align:left">Kanal 3 · Oli. Jeder Tipp kostet 2 Minuten.</p>' + body + '<button class="btn ghost" data-act="close">Funk aus</button>');
 }
 
@@ -2155,7 +2159,7 @@ function finishAchievements() {
 }
 
 /* ================= event wiring ================= */
-const SHEET_ACTIONS = ['look', 'funk','menu', 'funkArchive', 'installApp','item','boxAsk', 'rules', 'resetAsk', 'hint', 'fenceAnswer', 'sound', 'troll', 'foerster'];
+const SHEET_ACTIONS = ['look', 'funk','menu', 'funkArchive', 'installApp','item','boxAsk', 'hintAsk', 'rules', 'resetAsk', 'hint', 'fenceAnswer', 'sound', 'troll', 'foerster'];
 const TAP_HEAVY = ['gateWheel', 'herringWheel', 'slot', 'jug', 'person', 'cross', 'chest', 'troll', 'foerster'];
 document.addEventListener('click', e => {
   if (!instanceRunning) return;

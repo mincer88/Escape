@@ -76,7 +76,7 @@ Am Ende führt die Schaltfläche „Zum Escape Room“ auf https://www.escape-st
 ## Strafen und Tipps
 
 - Alle Meldungen (Funksprüche, Achievements, Hinweise) bleiben stehen, bis Konrad „Gelesen“ tippt. Es steht immer nur eine da; weitere warten dahinter („Gelesen · noch 2“). Die Funksprüche kommen von „Oli“, jeder nur einmal. Menü → „Funkprotokoll“ hat drei Abschnitte: Funksprüche (alle bisher gehörten), Tipps (nur die schon geholten, mit Ort, dazu gekaufte Fecht-Antworten) und Achievements (nur die schon erreichten, in der Reihenfolge des Erreichens). Nichts davon verrät, was noch kommt.
-- Funk-Tipp: 2 Minuten Abzug, 3 Stufen pro Station (Salon 4). Kein Tipp verrät die Lösung, auch nicht der letzte, und keiner erwähnt Konrads Knöchel vorab.
+- Funk-Tipp: 2 Minuten Abzug, 3 Stufen pro Station (Salon 4). Auch die einzelnen Wegweiser (z. B. „Ohne Licht geht hier keiner rüber …“, „Weiter in den Salon“) kosten 2 Minuten und stehen danach im Funkprotokoll. Vor jedem Abzug fragt das Spiel „Sicher? Es kostet dich 2 Minuten.“ („Ja, Tipp holen“ oder „Doch nicht“), auch bei der Fecht-Antwort. Kein Tipp verrät die Lösung, auch nicht der letzte, und keiner erwähnt Konrads Knöchel vorab.
 - Falsche Kiste im Salon: 10 Minuten. Falscher Altar: 1 Minute.
 - Krug-Rätsel: Jede 10. Umfüllung ohne Lösung kostet 5 Minuten, mit der Meldung „Bruteforcen ist lame!! −5 Minuten.“ Gezählt wird ab der ersten Umfüllung, „Alles zurück“ setzt den Zähler nicht zurück. Die kürzeste Lösung braucht 7 Umfüllungen.
 - Achievements auf der Gutschein-Seite: Nicht erreichte zeigen nur den Namen, die Bedingung steht als „???“. Speedrun gibt es unter 10 Minuten Prüfzeit.
