@@ -1397,7 +1397,7 @@ function artSalon() {
       '<ellipse cx="259" cy="68" rx="3.6" ry="2.4" fill="#f4ecd8"/><ellipse cx="273" cy="68" rx="3.6" ry="2.4" fill="#f4ecd8"/>' +
       '<circle class="pupil" data-cx="259" data-cy="68" data-r="1.6" cx="259" cy="68" r="1.5" fill="#1b1a12"/><circle class="pupil" data-cx="273" data-cy="68" data-r="1.6" cx="273" cy="68" r="1.5" fill="#1b1a12"/>' +
       '<path d="M261 82 Q266 84 271 82" stroke="#8a5a4a" stroke-width="1.2" fill="none"/><path d="M264 76 L266 72 L268 76" stroke="#b39579" fill="none"/>' +
-      '<rect x="248" y="128" width="36" height="9" fill="#c9a24a"/><text x="266" y="135" text-anchor="middle" font-size="6.5" fill="#2a2118" font-family="IM Fell English SC, serif">H. S. S.</text></g>' +
+      '<rect x="248" y="128" width="36" height="9" fill="#c9a24a"/><text x="266" y="135" text-anchor="middle" font-size="6.5" fill="#2a2118" font-family="IM Fell English SC, serif">M. K. F.</text></g>' +
     '<g><rect x="196" y="140" width="150" height="10" fill="#4a2f22"/><rect x="204" y="150" width="8" height="46" fill="#3a2419"/><rect x="330" y="150" width="8" height="46" fill="#3a2419"/></g>' +
     uvText(276, 178, 'IV·0', 8)
   );
@@ -1790,7 +1790,7 @@ const actions = {
       S.seen[loc.id] = true;
       if (loc.id === 'bruecke') afterRender.push(() => setTimeout(() => bubble('Na? Auch hier, um über meine Brücke zu latschen?'), 500));
       if (loc.id === 'forsthaus') { once.add('ghost'); setTimeout(() => Sound.creak(), 1700); setTimeout(() => Voice.say('konrad'), 2100); setTimeout(() => radio('Hast du das auch gesehen? Im Fenster? … Nein? Gut.'), 4600); setTimeout(() => radio('Komisch. Der Förster trägt dieselben Schuhe wie Marcel. Und wo ist Marcel eigentlich hin?'), 9000); }
-      if (loc.id === 'salon') { salonArrivedAt = Date.now(); setTimeout(() => Fx.blackout(), 700); setTimeout(() => radio('Das Porträt ist von H. S. S. Er schaut immer so. Glauben wir.'), 7500); }
+      if (loc.id === 'salon') { salonArrivedAt = Date.now(); setTimeout(() => Fx.blackout(), 700); setTimeout(() => radio('Das Porträt ist von M. K. F. Er schaut immer so. Glauben wir.'), 7500); }
       if (loc.id === 'altar') { Sound.rumble(); setTimeout(() => radio('Raum 46. Wir kennen da jemanden, der sich darüber freut.'), 900); setTimeout(() => radio(COLOR_JOKES.altar), 5200); }
     }
   },
