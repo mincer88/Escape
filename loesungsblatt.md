@@ -9,7 +9,7 @@ Fundstücke landen nicht automatisch im Inventar: Konrad nimmt jedes selbst, ind
 
 | # | Ort | Rätsel (Vorlage) | Lösung | Gibt |
 |---|---|---|---|---|
-| 0 | Einweisung | Hausregeln | Regel 3 („mindestens einer lügt, mindestens einer sagt die Wahrheit“) braucht man im Salon | – |
+| 0 | Einweisung | Hausregeln | Keine Regel ist ein Rätselhinweis; die Kisten-Regel steht erst im Salon im Tagebuch des Försters | – |
 | 1 | Tor | Zahlenschloss nach dem viralen „Crack the Code“-Rätsel, neue 4-stellige Instanz | **1289** | Weg zur Brücke. Die Laterne hängt außen am Pfosten und lässt sich jederzeit nehmen (im Bild antippen). Die UV-Lampe liegt links unten zwischen den Wurzeln. |
 | 2 | Brücke | Brücke und Fackel, 5-Personen-Variante | Erst Laterne im Inventar benutzen. Nach seinem 3. Gang knickt Konrad um (Krankenwagen) und braucht danach 2 Minuten. Lösung: Konrad+Oliver rüber (3), Konrad zurück (1), Marcel+Olla rüber (12), Oliver zurück (3), Konrad+Oliver rüber (3, danach Krankenwagen), Konrad humpelt zurück (2), Konrad+Daniel rüber (6) = **30 Min.**, das Minimum. | Beim Verlassen: BIERJUNGE → „Hängt!“ → Troll hält den Kanister hin, im Bild antippen. Schließt Konrad das Fenster, hält ihn der Troll auf der Brücke weiter hin. |
 | 3a | Forsthaus | Beleidigungsfechten (Mechanik aus Monkey Island, eigene Texte) | 3 Treffer. Die richtige Antwort enthält dasselbe Schlüsselwort wie die Beleidigung (Tabelle unten). Nach einem Fehler sagt der Förster den richtigen Konter; verpasste Beleidigungen kommen öfter wieder. | Förster ist Marcel, verkleidet; er hält den Zettel (Schablone) hin, im Bild antippen |
@@ -17,7 +17,7 @@ Fundstücke landen nicht automatisch im Inventar: Konrad nimmt jedes selbst, ind
 | 4 | Salon | Drei-Kisten-Rätsel wie im Parlor von Blue Prince, Aussagen in Freimaurer-Schrift | Blau: „SCHWARZ IST LEER“, Weiß: „DER STEIN IST HIER“, Schwarz: „BLAU SAGT DIE WAHRHEIT“ → **blaue Kiste** | Amulett in der offenen blauen Kiste antippen, erst dann öffnet Raum 46 |
 | 5 | Raum 46 | Mini-Logikgitter (Einstein-Rätsel) | Von links: **Schablone/Affe, Laterne/Mond, Amulett/Schädel, Kanister/Rabe** | Finale mit Gutschein |
 
-Warum Blau: Liegt der Stein in Weiß, sind alle drei Aussagen wahr. Liegt er in Schwarz, sind alle drei falsch. Beides verbietet Regel 3.
+Warum Blau: Liegt der Stein in Weiß, sind alle drei Aussagen wahr. Liegt er in Schwarz, sind alle drei falsch. Beides verbietet das Tagebuch des Försters im Salon („Die Kisten reden. Mindestens eine lügt, und mindestens eine sagt die Wahrheit.“). Die Regel gilt nur für die Kisten; die Hinweise am Tor und am Altar sind alle wahr.
 
 Fechten im Forsthaus: Der Förster nimmt zufällig Beleidigungen aus dieser Liste. Zur Auswahl stehen jeweils die richtige Antwort, zwei Antworten zu anderen Beleidigungen und eine Ausweich-Antwort.
 

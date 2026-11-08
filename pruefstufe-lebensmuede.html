@@ -586,9 +586,9 @@ const HINTS = {
   forsthausDone: ['Der Generator läuft, der Förster schmollt. Weiter in den Salon.'],
   salon: [
     'Die Gravuren sind Freimaurer-Schrift. Die Schablone aus deinem Inventar ist der Schlüssel.',
-    'Lies die Sicherheitseinweisung noch einmal (Menü oben rechts). Regel 3 gilt auch für Kisten.',
+    'Lies das Tagebuch des Försters noch einmal. Der letzte Satz ist eine Regel.',
     'Spiel jede Kiste durch: Wenn der Stein dort liegt, welche Aussagen stimmen dann? Es darf nicht alles wahr und nicht alles falsch sein.',
-    'Liegt der Stein in der weißen Kiste, sagen alle drei die Wahrheit. Das verbietet Regel 3. Und wie sieht es bei der schwarzen aus?',
+    'Liegt der Stein in der weißen Kiste, sagen alle drei die Wahrheit. Das verbietet das Tagebuch. Und wie sieht es bei der schwarzen aus?',
   ],
   salonDone: ['Das Amulett hast du. Hinter dem Forsthaus wartet Raum 46.'],
   altar: [
@@ -608,7 +608,6 @@ const HINT_PLACES = {
 const BRIEFING_RULES = [
   'Nichts über Kopfhöhe. Gilt auch für Bäume.',
   'Keine Gewalt. Schlösser gehen auf, wenn der Code stimmt, nicht wenn du fester drückst.',
-  'In diesem Wald lügt immer mindestens einer. Und mindestens einer sagt die Wahrheit.',
   'Das Funkgerät hilft. Jeder Tipp kostet 2 Minuten.',
   'Nicht alles ist ein Rätsel. Manches ist Deko. Manches ist schlimmer.',
   'Nach 30 Minuten ist die Prüfung nicht vorbei. Nur peinlicher.',
@@ -1639,7 +1638,7 @@ function sceneForsthaus() {
 
 function sceneSalon() {
   let h = '<h2 class="place">Der Salon</h2><p class="lede">Ein Kamin, ein Porträt, das dich anstarrt, und drei Kisten.</p>' + artSalon() +
-    '<div class="diary">Ich habe den Stein in eine der drei Kisten gelegt. Wer die falsche öffnet, verliert Zeit, die er nicht hat. Die Kisten reden, aber nicht alle ehrlich. Die Hausregel kennt jeder, der zugehört hat.<small>H. S. S., Förster</small></div>';
+    '<div class="diary">Ich habe den Stein in eine der drei Kisten gelegt. Wer die falsche öffnet, verliert Zeit, die er nicht hat. Die Kisten reden. Mindestens eine lügt, und mindestens eine sagt die Wahrheit.<small>H. S. S., Förster</small></div>';
   const chests = BOXES.map(b => {
     const opened = S.opened.includes(b.id) || (b.id === 'blau' && S.boxDone);
     const state = opened ? (once.has('chest-' + b.id) ? 'lid-opening' : 'lid-open') : '';
