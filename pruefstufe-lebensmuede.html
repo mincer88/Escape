@@ -401,7 +401,7 @@ const WRONG_ALTAR_COST = 1 * MINUTE;
 const BRUTE_FORCE_POURS = 10;
 const BRUTE_FORCE_COST = 5 * MINUTE;
 const SKIPPER_LIMIT_MS = 12000;
-const BRIDGE_LIMIT = 30;
+const BRIDGE_LIMIT = 31;
 const WALK_MS_PER_MINUTE = 260;
 const JUG_CAPS = [8, 5, 3];
 const FENCE_WINS_NEEDED = 3;
@@ -409,7 +409,7 @@ const PULSE_ACHIEVEMENT = 140;
 const UV_ON_MS = 10000;
 const KONRAD_SAFE_CROSSINGS = 3;
 const GAME_MASTER = 'Oli';
-const LIMP_MINUTES = 2;
+const LIMP_MINUTES = 4;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Answers are stored as FNV-1a hashes, the voucher as base64, so a glance at the source spoils nothing.
@@ -427,7 +427,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 
 /* ================= content ================= */
 const ITEMS = {
-  laterne:   { name: 'Laterne',   desc: 'Alte Petroleumlaterne. Sie brennt genau 30 Minuten, sagt der Troll.', icon: 'M8 4h8M9 4v3h6V4M7 7h10l-1 12H8L7 7zM12 11v4M10 21h4' },
+  laterne:   { name: 'Laterne',   desc: 'Alte Petroleumlaterne. Sie brennt genau 31 Minuten, sagt der Troll.', icon: 'M8 4h8M9 4v3h6V4M7 7h10l-1 12H8L7 7zM12 11v4M10 21h4' },
   uv:        { name: 'UV-Lampe',  desc: 'Schwarzlicht. Jeder Profi liebt Schwarzlicht.', icon: 'M7 3h10v6l-3 3v9h-4v-9L7 9V3zM5 3h14' },
   kanister:  { name: 'Kanister',  desc: '8 Liter Diesel, randvoll. Riecht nach Generator.', icon: 'M6 6h9l3 3v12H6V6zM9 3h5v3H9zM9 12h6M9 16h6' },
   schablone: { name: 'Schablone', desc: 'Ein Zettel mit Gittern, Winkeln und Punkten. Vom Förster.', icon: 'M4 4h16v16H4zM9.3 4v16M14.7 4v16M4 9.3h16M4 14.7h16' },
@@ -1585,7 +1585,7 @@ function sceneBridge() {
   };
   const slowest = b.sel.length ? Math.max(...b.sel.map(id => walkTime(id, b))) : 0;
   h += '<div class="card" id="bridgeCard"><h3>Regeln der Brücke</h3>' +
-    '<p>Fünf Leute, eine Laterne, 30 Minuten Brenndauer. Höchstens zwei gleichzeitig auf der Brücke, und die Laterne muss immer mit. Zwei gehen im Tempo des Langsameren.</p>' +
+    '<p>Fünf Leute, eine Laterne, 31 Minuten Brenndauer. Höchstens zwei gleichzeitig auf der Brücke, und die Laterne muss immer mit. Zwei gehen im Tempo des Langsameren.</p>' +
     '<div class="banks">' + bank('L') + bank('R') + '</div>' +
     '<div class="row between"><span class="score">Laterne: ' + b.t + ' von ' + BRIDGE_LIMIT + ' Min.</span><span class="score">' + (b.sel.length ? 'Dauer: ' + slowest + ' Min.' : 'Tippe 1 bis 2 Leute bei der Laterne an') + '</span></div>' +
     '<div class="meter' + (b.failed ? ' bad' : '') + '"><i style="width:' + Math.min(100, b.t / BRIDGE_LIMIT * 100) + '%"></i></div>' +
@@ -1891,12 +1891,14 @@ const actions = {
       }
       if (ankleNow) {
         Fx.ambulance();
-        setTimeout(() => toast('Konrad ist umgeknickt. Nach dem Röntgen im Krankenhaus gibt es ab jetzt eine Schiene. Weiter geht’s, aber Konrad humpelt: ab jetzt 2 Minuten pro Gang.', 'bad', 'Sanitäter'), 3600);
+        setTimeout(() => toast('Konrad ist umgeknickt. Nach dem Röntgen im Krankenhaus gibt es ab jetzt eine Schiene. Weiter geht’s, aber Konrad humpelt: ab jetzt 4 Minuten pro Gang.', 'bad', 'Sanitäter'), 3600);
       }
       if (allOver) {
         S.bridgeDone = true; stress(-15); Sound.ok();
         S.fence = S.fence || newFenceRound();
-        toast('Alle drüben, nach ' + b.t + ' Minuten. Der Troll schaut dir nachdenklich hinterher.', 'ok');
+        const allOverToast = () => toast('Alle drüben, nach ' + b.t + ' Minuten. Der Troll schaut dir nachdenklich hinterher.', 'ok');
+        // On the 31-minute solutions the twist can come with the last crossing; the medics speak first.
+        if (ankleNow) setTimeout(allOverToast, 3700); else allOverToast();
       }
       save(); render();
     }));
